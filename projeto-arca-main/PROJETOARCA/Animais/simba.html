@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perfil do Animal - Projeto ARCA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="perfil.css">
+
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo-nav">
+        <img src="PROJETOARCA/elementos UIUX/image 42.png" alt="Projeto ARCA" class="logo-nav-imagem">
+        </a>
+
+    <div class="nav-links">
+        <a href="index.html">Início</a>
+        <a href="animais.html" class="ativo">Pets para Adoção</a>
+        <a href="ongs.html">ONGs</a>
+        <a href="denunciar.html">Denunciar</a>
+        <a href="minha-adocao.html">Minha Adoção</a>
+    </div>
+
+    <div class="usuario-logado">
+      <span>Olá, Usuário</span>
+      <button onclick="abrirMenuUsuario()">▼</button>
+
+      <div class="menu-usuario" id="menuUsuario">
+        <a href="perfil.html">Meu Perfil</a>
+        <a href="index.html">Sair</a>
+      </div>
+    </div>
+    </nav>
+
+<section class="perfil-animal">
+
+  <div class="imagem-animal">
+    <img src="img/simba.jpeg" alt="Foto do animal">
+  </div>
+
+  <div class="info-perfil">
+    <span class="status">Disponível para adoção</span>
+
+    <h1>Simba</h1>
+    <p class="descricao-curta">Um gato curioso, independente e extremamente carinhoso.</p>
+
+    <div class="dados">
+      <div>
+        <strong>Espécie</strong>
+        <p>Gato</p>
+      </div>
+
+      <div>
+        <strong>Sexo</strong>
+        <p>Macho</p>
+      </div>
+
+      <div>
+        <strong>Idade</strong>
+        <p>3 anos</p>
+      </div>
+
+      <div>
+        <strong>Porte</strong>
+        <p>Pequeno</p>
+      </div>
+    </div>
+
+    <h3>Sobre o Simba</h3>
+    <p class="texto">
+        Simba foi resgatado ainda filhote e cresceu recebendo muito cuidado e atenção.
+        Ele gosta de explorar ambientes, descansar em locais confortáveis e interagir com
+        pessoas que conquistam sua confiança. É um gato saudável e muito afetuoso.
+    </p>
+
+    <h3>Informações de saúde</h3>
+    <ul>
+      <li>Vacinado</li>
+      <li>Castrado</li>
+      <li>Vermifugado</li>
+    </ul>
+
+    <div class="botoes-perfil">
+      <a href="formulario-adocao.html" class="btn-adotar">Quero adotar</a>
+      <a href="animais.html" class="btn-voltar">Voltar</a>
+    </div>
+  </div>
+
+</section>
+
+<footer>
+  <p class="rodape-direitos">
+    © 2026 Projeto ARCA · Prefeitura Municipal da Serra · Contato: (27) 6000-0000 | contato@arca.com
+  </p>
+</footer>
+
+<script src="perfil.js"></script>
+</body>
+</html>

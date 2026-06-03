@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Projeto ARCA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+    <script defer>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelector('form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = document.getElementById('email').value.toLowerCase();
+                if (email.endsWith('@arca.com')) {
+                    window.location.href = '../fluxo%20ong/homeong.html';
+                } else {
+                    window.location.href = '../../index.html';
+                }
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div class="pag-login">
+        <div class="login-card">
+            <div class="logo-section">
+                <div class="logo-icon">
+                    <span style="color: #0b1d5a; font-size: 20px;"><img src="./img/logo_projeto_arca.png"
+                            alt="cachorro e gato"></span>
+                </div>
+                <div class="texto-logo">
+                    <h1>ARCA</h1>
+                    <p>RESGATE • ADOÇÃO • CUIDADO</p>
+                </div>
+            </div>
+            <div class="conteudo-login">
+                <h2>Bem-vindo de volta!</h2>
+                <p>Faça login! Ajude nossos animais!</p>
+            </div>
+            <br>
+            <form>
+                <div class="input">
+                    <label for="email"> E-mail</label>
+                    <input type="email" id="email" placeholder="Digite Seu E-mail" required>
+                </div>
+                <div class="input">
+                    <label for="password">Senha</label>
+                    <input type="password" id="password" placeholder="Digite sua senha" required>
+                </div>
+                <div class="options-line">
+                    <div class="remember-me">
+                        <input type="checkbox" id="remember">
+                        <label for="remember">Lembrar de mim</label>
+                    </div>
+                    <a href="./redefinir senha.html" class="redefinir-senha">Redefinir Senha</a>
+                </div>
+                <button type="submit" class="botao-login"> Entrar</button>
+            </form>
+            <p>Ainda não tem uma conta?</p> <a href="./cadastre-se aqui.html" class="signup-link">Cadastre-se aqui</a>
+            <div style="text-align: center; margin-top: 16px;">
+                <a href="../fluxo user/homeuser1.html" style="font-size: 0.8rem; color: #888; text-decoration: none;">← Voltar ao início</a>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,319 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #fafafa;
+  color: #1a2b4a;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 6px 32px;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo-nav-imagem {
+  height: 90px;
+}
+
+.nav-links {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  gap: 4px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #374151;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 6px 11px;
+  border-radius: 6px;
+}
+
+.nav-links a:hover,
+.nav-links .ativo {
+  background: #eff4ff;
+  color: #1a56db;
+}
+
+.usuario-logado {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  color: #1a2b4a;
+}
+
+.usuario-logado button {
+  background: #1a56db;
+  color: #fff;
+  border: none;
+  padding: 6px 9px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.menu-usuario {
+  display: none;
+  position: absolute;
+  top: 36px;
+  right: 0;
+  background: #fff;
+  width: 160px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  overflow: hidden;
+  z-index: 200;
+}
+
+.menu-usuario a {
+  display: block;
+  padding: 10px 14px;
+  color: #374151;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.menu-usuario a:hover {
+  background: #eff4ff;
+  color: #1a56db;
+}
+
+.menu-usuario.ativo {
+  display: block;
+}
+
+.topoanimais {
+  text-align: center;
+  padding: 45px 20px 30px;
+  background: #fff;
+}
+
+.topoanimais h1 {
+  font-size: 30px;
+  font-weight: 800;
+  color: #1a2b4a;
+}
+
+.topoanimais p {
+  font-size: 14px;
+  color: #5a6a84;
+  margin-top: 8px;
+}
+
+.filtros {
+  margin-top: 25px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+.filtros button {
+  background: #fff;
+  color: #1a56db;
+  border: 1.5px solid #1a56db;
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.filtros button:hover {
+  background: #1a56db;
+  color: #fff;
+}
+
+.lista-animais {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 0 30px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+}
+
+.card-animal {
+  background: #fff;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: 0.3s;
+}
+
+.card-animal:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+}
+
+.card-animal img {
+  width: 100%;
+  height: 170px;
+  object-fit: cover;
+}
+
+.info-animal {
+  padding: 16px;
+}
+
+.info-animal h3 {
+  font-size: 18px;
+  color: #1a2b4a;
+  margin-bottom: 5px;
+}
+
+.info-animal p {
+  font-size: 13px;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.info-animal span {
+  display: block;
+  background: #d1fae5;
+  color: #065f46;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 8px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.info-animal a {
+  display: block;
+  text-align: center;
+  background: #1a56db;
+  color: #fff;
+  text-decoration: none;
+  padding: 9px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.info-animal a:hover {
+  background: #1444c0;
+}
+
+footer {
+  background: #fff;
+  border-top: 1px solid #f0f0f0;
+  padding: 12px 20px;
+}
+
+.rodape-direitos {
+  font-size: 12px;
+  color: #9ca3af;
+  text-align: center;
+}
+
+@media (max-width: 992px) {
+  nav {
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 10px 20px;
+  }
+
+  .nav-links {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 10px;
+  }
+
+  .usuario-logado {
+    margin-top: 8px;
+  }
+
+  .menu-usuario {
+    right: auto;
+    left: 0;
+  }
+
+  .lista-animais {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 760px;
+  }
+
+  .card-animal img {
+    height: 210px;
+  }
+}
+
+@media (max-width: 600px) {
+  nav {
+    flex-direction: column;
+    padding: 12px;
+  }
+
+  .logo-nav-imagem {
+    height: 70px;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .nav-links a {
+    font-size: 14px;
+  }
+
+  .usuario-logado {
+    margin-top: 10px;
+  }
+
+  .menu-usuario {
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+  }
+
+  .topoanimais {
+    padding: 30px 15px;
+  }
+
+  .topoanimais h1 {
+    font-size: 24px;
+  }
+
+  .topoanimais p {
+    font-size: 13px;
+  }
+
+  .filtros button {
+    font-size: 13px;
+    padding: 8px 14px;
+  }
+
+  .lista-animais {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    padding: 0 16px;
+    margin: 30px auto;
+  }
+
+  .card-animal img {
+    height: 230px;
+  }
+
+  .rodape-direitos {
+    font-size: 11px;
+  }
+}

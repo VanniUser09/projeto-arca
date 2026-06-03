@@ -1,0 +1,580 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f0f0f0;
+    display: flex;
+    min-height: 100vh;
+}
+
+.sobreposicao {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 99;
+}
+
+.sobreposicao.visivel {
+    display: block;
+}
+
+.barra-lateral {
+    width: 260px;
+    min-height: 100vh;
+    background-color: #1a2b4a;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    transition: transform 0.3s ease;
+}
+
+.barra-lateral-topo {
+    padding: 20px 16px;
+}
+
+.cabecalho-marca {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #2d3f60;
+    margin-bottom: 20px;
+}
+
+.logo-marca {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    border-radius: 8px;
+    padding: 8px 12px;
+    min-width: 60px;
+}
+
+.logo-icone {
+    font-size: 22px;
+}
+
+.logo-texto {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1a2b4a;
+}
+
+.subtitulo-marca {
+    color: #4a9fd4;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.3;
+    flex: 1;
+}
+
+.botao-menu {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 4px;
+    margin-left: auto;
+}
+
+.botao-menu span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background-color: white;
+    border-radius: 2px;
+}
+
+nav ul {
+    list-style: none;
+}
+
+nav ul li {
+    margin-bottom: 4px;
+}
+
+nav ul li a {
+    display: block;
+    color: #c0cfe0;
+    text-decoration: none;
+    font-size: 13.5px;
+    padding: 9px 14px;
+    border-radius: 6px;
+    transition: background 0.2s, color 0.2s;
+}
+
+nav ul li a:hover,
+nav ul li a.ativo {
+    background-color: #2d3f60;
+    color: white;
+    font-weight: 600;
+}
+
+.rodape-barra-lateral {
+    padding: 16px;
+    border-top: 1px solid #2d3f60;
+}
+
+.logo-prefeitura {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: white;
+    border-radius: 8px;
+    padding: 10px 14px;
+}
+
+.icone-prefeitura {
+    font-size: 26px;
+}
+
+.texto-prefeitura {
+    display: flex;
+    flex-direction: column;
+    font-size: 12px;
+    color: #1a2b4a;
+    line-height: 1.3;
+}
+
+.texto-prefeitura strong {
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.barra-topo-mobile {
+    display: none;
+}
+
+.principal {
+    margin-left: 260px;
+    flex: 1;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.grade-estatisticas {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+}
+
+.cartao-estatistica {
+    background: white;
+    border-radius: 10px;
+    padding: 18px 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    border: 2px solid transparent;
+}
+
+.cartao-estatistica.azul   { border-color: #2563EB; }
+.cartao-estatistica.verde  { border-color: #10B981; }
+.cartao-estatistica.laranja{ border-color: #F59E0B; }
+.cartao-estatistica.ceu    { border-color: #0EA5E9; }
+
+.icone-estatistica {
+    font-size: 28px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.icone-azul   { background-color: #DBEAFE; }
+.icone-verde  { background-color: #D1FAE5; }
+.icone-laranja{ background-color: #FEF3C7; }
+.icone-ceu    { background-color: #E0F2FE; }
+
+.titulo-estatistica {
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.texto-azul   { color: #2563EB; }
+.texto-verde  { color: #10B981; }
+.texto-laranja{ color: #F59E0B; }
+.texto-ceu    { color: #0EA5E9; }
+
+.numero-estatistica {
+    font-size: 26px;
+    font-weight: 700;
+    color: #111;
+    line-height: 1;
+}
+
+.descricao-estatistica {
+    font-size: 11px;
+    color: #888;
+    margin-top: 2px;
+}
+
+.secao-meio {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.painel-tabela,
+.painel-pet,
+.secao-relatorios {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+}
+
+.titulo-painel {
+    font-size: 16px;
+    font-weight: 700;
+    color: #2563EB;
+    margin-bottom: 14px;
+}
+
+.tabela-rolavel {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    min-width: 420px;
+}
+
+thead tr {
+    background-color: #f5f5f5;
+}
+
+th {
+    text-align: left;
+    padding: 10px 12px;
+    font-size: 12px;
+    color: #555;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #eee;
+    color: #333;
+    white-space: nowrap;
+}
+
+.etiqueta {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 4px;
+}
+
+.etiqueta.alta  { background: #FEE2E2; color: #DC2626; }
+.etiqueta.media { background: #FEF9C3; color: #B45309; }
+.etiqueta.baixa { background: #DCFCE7; color: #16A34A; }
+
+.botao-visualizar {
+    background-color: #F59E0B;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.botao-visualizar:hover {
+    background-color: #D97706;
+}
+
+.cartao-pet {
+    display: flex;
+    gap: 14px;
+}
+
+.foto-pet {
+    width: 130px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+.informacoes-pet p {
+    font-size: 12.5px;
+    color: #333;
+    margin-bottom: 5px;
+    line-height: 1.4;
+}
+
+.secao-relatorios {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.cabecalho-relatorios {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.cabecalho-relatorios .titulo-painel {
+    margin-bottom: 0;
+}
+
+.selecao-mes {
+    border: none;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    background: transparent;
+    cursor: pointer;
+    appearance: none;
+    padding-right: 18px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23333' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 2px center;
+}
+
+.area-grafico {
+    display: flex;
+    gap: 10px;
+    height: 160px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.eixo-y {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 11px;
+    color: #999;
+    text-align: right;
+    padding-bottom: 24px;
+    flex-shrink: 0;
+}
+
+.barras-grafico {
+    display: flex;
+    align-items: flex-end;
+    gap: 20px;
+    flex: 1;
+    border-bottom: 2px solid #ddd;
+    border-left: 2px solid #ddd;
+    padding: 0 10px;
+    min-width: 280px;
+}
+
+.grupo-barra {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    flex: 1;
+    height: 100%;
+    justify-content: flex-end;
+}
+
+.barra {
+    width: 100%;
+    max-width: 40px;
+    border-radius: 4px 4px 0 0;
+    transition: height 0.4s ease;
+}
+
+.rotulo-barra {
+    font-size: 10px;
+    color: #666;
+    white-space: nowrap;
+}
+
+.rodape-relatorios {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.botao-gerar {
+    background-color: #F59E0B;
+    color: white;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.botao-gerar:hover {
+    background-color: #D97706;
+}
+
+footer {
+    text-align: center;
+    font-size: 12px;
+    color: #777;
+    padding: 10px 0 4px;
+}
+
+@media (max-width: 1100px) {
+    .grade-estatisticas {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+    .secao-meio {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+
+.barra-lateral {
+        transform: translateX(-260px);
+    }
+
+    .barra-lateral.aberto {
+        transform: translateX(0);
+    }
+
+.barra-topo-mobile {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 56px;
+        background-color: #1a2b4a;
+        padding: 0 16px;
+        z-index: 98;
+    }
+
+    .botao-menu-mobile {
+        background: none;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        padding: 6px;
+    }
+
+    .botao-menu-mobile span {
+        display: block;
+        width: 24px;
+        height: 2px;
+        background-color: white;
+        border-radius: 2px;
+        transition: transform 0.3s, opacity 0.3s;
+    }
+
+    .logo-topo-mobile {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: white;
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+.principal {
+        margin-left: 0;
+        padding: 72px 14px 14px;
+        gap: 14px;
+    }
+
+.grade-estatisticas {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .cartao-estatistica {
+        padding: 14px 12px;
+        gap: 10px;
+    }
+
+    .icone-estatistica {
+        width: 40px;
+        height: 40px;
+        font-size: 22px;
+    }
+
+    .numero-estatistica {
+        font-size: 22px;
+    }
+
+.secao-meio {
+        grid-template-columns: 1fr;
+    }
+
+.cartao-pet {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .foto-pet {
+        width: 100%;
+        height: 200px;
+    }
+
+.cabecalho-relatorios {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+.rodape-relatorios {
+        justify-content: stretch;
+    }
+
+    .botao-gerar {
+        width: 100%;
+        text-align: center;
+        padding: 12px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+
+.grade-estatisticas {
+        grid-template-columns: 1fr;
+    }
+
+    .painel-tabela,
+    .painel-pet,
+    .secao-relatorios {
+        padding: 14px;
+    }
+
+    .titulo-painel {
+        font-size: 14px;
+    }
+}

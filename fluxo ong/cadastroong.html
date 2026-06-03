@@ -1,0 +1,372 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastrar Animal - Projeto ARCA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Poppins', sans-serif; background: #f4f7fb; color: #1a2b4a; }
+
+    .pag-cadastro {
+      display: flex; align-items: flex-start; justify-content: center;
+      min-height: 100vh; padding: 40px 20px;
+    }
+
+    .cadastro-card {
+      background: #fff; border-radius: 14px; border: 1px solid #e9eef5;
+      padding: 40px; max-width: 680px; width: 100%;
+    }
+
+    .logo-section {
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 30px;
+    }
+    .logo-section img { max-width: 200px; height: auto; }
+
+    .conteudo-cadastro { text-align: center; margin-bottom: 30px; }
+    .conteudo-cadastro h2 { font-size: 24px; margin-bottom: 8px; color: #0b1d5a; }
+    .conteudo-cadastro p { font-size: 14px; color: #666; }
+
+    .secao-titulo {
+      font-size: 12px; font-weight: 700; color: #0a1628;
+      text-transform: uppercase; letter-spacing: 0.8px;
+      margin: 28px 0 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #f0f4f8;
+    }
+
+    .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-row.three { grid-template-columns: 1fr 1fr 1fr; }
+
+    label {
+      font-size: 12px; font-weight: 600; color: #555;
+      text-transform: uppercase; letter-spacing: 0.5px;
+    }
+
+    input, select, textarea {
+      padding: 10px 14px; border: 1px solid #e9eef5; border-radius: 8px;
+      font-family: inherit; font-size: 13px; outline: none;
+      color: #333; background: white;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: #1a56db;
+      box-shadow: 0 0 0 3px rgba(26,86,219,0.08);
+    }
+    input::placeholder, textarea::placeholder { color: #bbb; }
+
+    select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 12px center;
+      cursor: pointer;
+    }
+
+    textarea { resize: vertical; min-height: 100px; line-height: 1.6; }
+
+    .option-group { display: flex; flex-wrap: wrap; gap: 8px; }
+    .option-btn {
+      display: flex; align-items: center; gap: 6px;
+      padding: 8px 16px; border-radius: 8px;
+      border: 1px solid #e9eef5; background: white;
+      font-family: 'Poppins', sans-serif; font-size: 13px;
+      color: #555; cursor: pointer; transition: all 0.2s; font-weight: 500;
+    }
+    .option-btn:hover { border-color: #1a56db; color: #1a56db; background: #eff6ff; }
+    .option-btn.selected { border-color: #1a56db; color: #1a56db; background: #eff6ff; }
+    .option-btn input { display: none; }
+
+    .porte-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+    .porte-card {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 8px; padding: 14px 10px; border-radius: 10px;
+      border: 1px solid #e9eef5; cursor: pointer;
+      transition: all 0.2s; text-align: center;
+    }
+    .porte-card:hover { border-color: #1a56db; background: #eff6ff; }
+    .porte-card.selected { border-color: #1a56db; background: #eff6ff; }
+    .porte-name { font-size: 13px; font-weight: 600; color: #0a1628; }
+    .porte-desc { font-size: 10px; color: #999; }
+    .porte-card.selected .porte-name { color: #1a56db; }
+
+    .check-group { display: flex; flex-direction: column; gap: 8px; }
+    .check-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 14px; border-radius: 8px;
+      border: 1px solid #e9eef5; cursor: pointer;
+      transition: all 0.2s; font-size: 13px; color: #444;
+    }
+    .check-item:hover { border-color: #1a56db; background: #eff6ff; }
+    .check-item input[type="checkbox"] { width: 16px; height: 16px; accent-color: #1a56db; cursor: pointer; flex-shrink: 0; }
+    .check-item-label { display: flex; flex-direction: column; }
+    .check-item-label span { font-size: 11px; color: #999; margin-top: 1px; }
+
+.upload-area {
+      border: 2px dashed #d1d9e8; border-radius: 12px;
+      padding: 28px 20px; text-align: center;
+      cursor: pointer; transition: all 0.2s; background: #fafbfc;
+    }
+    .upload-area:hover { border-color: #1a56db; background: #eff6ff; }
+    .upload-title { font-size: 14px; font-weight: 600; color: #0a1628; margin-bottom: 4px; }
+    .upload-sub { font-size: 12px; color: #999; }
+    .upload-sub span { color: #1a56db; font-weight: 500; }
+    .upload-formats { font-size: 11px; color: #bbb; margin-top: 6px; }
+
+    .botao-salvar {
+      width: 100%; background: #1a56db; color: #fff; border: none;
+      padding: 12px; border-radius: 8px; font-weight: 600;
+      cursor: pointer; font-size: 14px; font-family: 'Poppins', sans-serif;
+      transition: background 0.2s;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .botao-salvar:hover { background: #1648c0; }
+
+    .botao-cancelar {
+      width: 100%; background: #fff; color: #666; border: 1px solid #e9eef5;
+      padding: 12px; border-radius: 8px; cursor: pointer; margin-top: 8px;
+      font-weight: 500; font-size: 14px; font-family: 'Poppins', sans-serif;
+      transition: all 0.2s;
+    }
+    .botao-cancelar:hover { border-color: #ccc; color: #333; }
+
+@media (max-width: 600px) {
+      .cadastro-card { padding: 24px 16px; }
+      .form-row { grid-template-columns: 1fr; }
+      .form-row.three { grid-template-columns: 1fr 1fr; }
+      .porte-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 400px) {
+      .form-row.three { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="pag-cadastro">
+  <div class="cadastro-card">
+
+    <div class="logo-section">
+      <img src="../elementos UIUX/image 42.png" alt="Projeto ARCA">
+    </div>
+
+    <div class="conteudo-cadastro">
+      <h2>Cadastrar Animal</h2>
+      <p>Preencha os dados do animal para registrá-lo no sistema</p>
+    </div>
+
+    <form id="form-cadastro">
+
+      <div class="secao-titulo">Identificação</div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Nome do animal</label>
+          <input type="text" placeholder="Ex: Thor, Mia, Bob...">
+        </div>
+        <div class="form-group">
+          <label>Raça</label>
+          <input type="text" placeholder="Ex: Labrador, Siamês, SRD...">
+        </div>
+      </div>
+
+      <div class="form-row three">
+        <div class="form-group">
+          <label>Tipo</label>
+          <select>
+            <option value="" disabled selected>Selecionar</option>
+            <option>Cão</option>
+            <option>Gato</option>
+            <option>Coelho</option>
+            <option>Ave</option>
+            <option>Outro</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Idade</label>
+          <input type="text" placeholder="Ex: 2 anos, 4 meses...">
+        </div>
+        <div class="form-group">
+          <label>Cor / Pelagem</label>
+          <input type="text" placeholder="Ex: Caramelo, Preto e branco...">
+        </div>
+      </div>
+
+      <div class="secao-titulo">Gênero</div>
+
+      <div class="form-group">
+        <div class="option-group">
+          <label class="option-btn selected">
+            <input type="radio" name="genero" value="macho" checked>
+            Macho
+          </label>
+          <label class="option-btn">
+            <input type="radio" name="genero" value="femea">
+            Fêmea
+          </label>
+          <label class="option-btn">
+            <input type="radio" name="genero" value="nao-informado">
+            Não informado
+          </label>
+        </div>
+      </div>
+
+      <div class="secao-titulo">Porte Físico</div>
+
+      <div class="form-group">
+        <div class="porte-grid">
+          <div class="porte-card" onclick="selectPorte(this)">
+            <div class="porte-name">Miniaturo</div>
+            <div class="porte-desc">Até 5 kg</div>
+          </div>
+          <div class="porte-card selected" onclick="selectPorte(this)">
+            <div class="porte-name">Pequeno</div>
+            <div class="porte-desc">5 – 15 kg</div>
+          </div>
+          <div class="porte-card" onclick="selectPorte(this)">
+            <div class="porte-name">Médio</div>
+            <div class="porte-desc">15 – 30 kg</div>
+          </div>
+          <div class="porte-card" onclick="selectPorte(this)">
+            <div class="porte-name">Grande</div>
+            <div class="porte-desc">Acima de 30 kg</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="secao-titulo">Características e Saúde</div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Vacinação</label>
+          <select>
+            <option value="" disabled selected>Selecionar</option>
+            <option>Vacinado em dia</option>
+            <option>Parcialmente vacinado</option>
+            <option>Não vacinado</option>
+            <option>Não informado</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Castração</label>
+          <select>
+            <option value="" disabled selected>Selecionar</option>
+            <option>Castrado(a)</option>
+            <option>Não castrado(a)</option>
+            <option>Não informado</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label style="margin-bottom: 4px;">Comportamento</label>
+        <div class="check-group">
+          <label class="check-item">
+            <input type="checkbox">
+            <div class="check-item-label">
+              Amigável com crianças
+              <span>Convive bem com crianças de qualquer idade</span>
+            </div>
+          </label>
+          <label class="check-item">
+            <input type="checkbox">
+            <div class="check-item-label">
+              Amigável com outros animais
+              <span>Convive bem com cães, gatos ou outros pets</span>
+            </div>
+          </label>
+          <label class="check-item">
+            <input type="checkbox">
+            <div class="check-item-label">
+              Bom para guarda
+              <span>Comportamento protetor e alerta</span>
+            </div>
+          </label>
+          <label class="check-item">
+            <input type="checkbox">
+            <div class="check-item-label">
+              Necessita espaço externo
+              <span>Recomendado para casas com quintal</span>
+            </div>
+          </label>
+          <label class="check-item">
+            <input type="checkbox">
+            <div class="check-item-label">
+              Necessita cuidados especiais
+              <span>Tratamento contínuo ou atenção médica</span>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <div class="secao-titulo">Descrição</div>
+
+      <div class="form-group">
+        <label>Descrição</label>
+        <textarea placeholder="Descreva a personalidade, histórico, comportamento e qualquer informação relevante sobre o animal..."></textarea>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Local de resgate</label>
+          <input type="text" placeholder="Ex: Bairro Laranjeiras, Serra - ES">
+        </div>
+        <div class="form-group">
+          <label>Data de entrada</label>
+          <input type="date">
+        </div>
+      </div>
+
+      <div class="secao-titulo">Status do Animal</div>
+
+      <div class="form-group">
+        <label>Status</label>
+        <select>
+          <option value="disponivel" selected>Disponível — Pronto para adoção</option>
+          <option value="tratamento">Em tratamento — Aguardando liberação médica</option>
+          <option value="reservado">Reservado — Processo de adoção iniciado</option>
+          <option value="indisponivel">Indisponível — Não disponível para adoção</option>
+        </select>
+      </div>
+
+      <div class="secao-titulo">Fotos do Animal</div>
+
+      <div class="form-group">
+        <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+          <div class="upload-title">Enviar fotos</div>
+          <div class="upload-sub"><span>Clique para selecionar</span> ou arraste aqui</div>
+          <div class="upload-formats">PNG, JPG, WEBP · máx. 5 MB cada</div>
+        </div>
+        <input type="file" id="fileInput" multiple accept="image/*" style="display:none">
+      </div>
+
+      <button type="submit" class="botao-salvar">Salvar Animal</button>
+      <button type="button" class="botao-cancelar" onclick="history.back()">Cancelar</button>
+
+</form>
+  </div>
+</div>
+
+<script>
+  function selectPorte(el) {
+    document.querySelectorAll('.porte-card').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+  document.querySelectorAll('.option-btn input[type="radio"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+      document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+      radio.closest('.option-btn').classList.add('selected');
+    });
+  });
+
+  document.getElementById('form-cadastro').addEventListener('submit', function(e) {
+    e.preventDefault();
+    window.location.href = 'sucesso2.html';
+  });
+</script>
+
+</body>
+</html>

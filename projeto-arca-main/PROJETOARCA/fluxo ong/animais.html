@@ -1,0 +1,991 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projeto ARCA — Animais</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Poppins', sans-serif; background: #0a1628; display: flex; min-height: 100vh; }
+
+.sidebar {
+      width: 240px;
+      min-height: 100vh;
+      background: white;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0; left: 0;
+      z-index: 100;
+      border-right: 1px solid #e9eef5;
+    }
+    .sidebar-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px 16px;
+      border-bottom: 1px solid #e9eef5;
+    }
+    .sidebar-nav { flex: 1; padding: 16px 12px; }
+    .nav-label {
+      color: #bbb;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 0 8px;
+      margin: 20px 0 8px;
+    }
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      color: #666;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.2s;
+      margin-bottom: 3px;
+    }
+    .nav-link:hover { background: #f5f7fa; color: #0a1628; }
+    .nav-link.active { background: #1a56db; color: white; }
+    .nav-link svg { flex-shrink: 0; }
+    .sidebar-footer {
+      padding: 16px 20px;
+      border-top: 1px solid #e9eef5;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      transition: background 0.2s;
+      cursor: pointer;
+      position: relative;
+      z-index: 10;
+    }
+    .sidebar-footer:hover { background: #f5f7fa; }
+    .sb-avatar {
+      width: 36px; height: 36px;
+      background: #1a56db;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: white;
+      flex-shrink: 0;
+    }
+    .sb-name { color: #0a1628; font-size: 13px; font-weight: 600; }
+    .sb-role { color: #999; font-size: 11px; }
+
+.main {
+      margin-left: 240px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+.topbar {
+      background: white;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+      border-bottom: 1px solid #e9eef5;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .topbar-title { font-size: 16px; font-weight: 600; color: #0a1628; }
+    .topbar-title span { color: #999; font-weight: 400; font-size: 14px; }
+    .topbar-right { display: flex; align-items: center; gap: 10px; }
+    .search-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #f5f7fa;
+      border: 1px solid #e9eef5;
+      border-radius: 8px;
+      padding: 7px 14px;
+    }
+    .search-box input {
+      border: none;
+      background: transparent;
+      font-family: 'Poppins', sans-serif;
+      font-size: 13px;
+      color: #333;
+      outline: none;
+      width: 200px;
+    }
+    .search-box input::placeholder { color: #bbb; }
+    .icon-btn {
+      width: 38px; height: 38px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      color: #666;
+      background: #f5f7fa;
+      border: 1px solid #e9eef5;
+      cursor: pointer;
+      position: relative;
+    }
+    .notif-dot {
+      width: 8px; height: 8px;
+      background: #ef4444;
+      border-radius: 50%;
+      border: 2px solid white;
+      position: absolute;
+      top: 5px; right: 5px;
+    }
+    .user-chip {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 12px 4px 4px;
+      background: #f5f7fa;
+      border: 1px solid #e9eef5;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+    .user-chip-avatar {
+      width: 30px; height: 30px;
+      background: #1a56db;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: white;
+    }
+    .user-chip span { font-size: 13px; font-weight: 500; color: #333; }
+
+.content { padding: 24px 28px; flex: 1; }
+
+.page-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 22px;
+    }
+    .page-header h2 { font-size: 20px; font-weight: 700; color: white; }
+    .page-header p { font-size: 13px; color: rgba(255,255,255,0.5); margin-top: 2px; }
+    .btn-add {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #1a56db;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-add:hover { background: #1648c0; }
+
+.animals-layout {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+.filter-panel {
+      background: white;
+      border-radius: 14px;
+      border: 1px solid #e9eef5;
+      padding: 20px;
+      position: sticky;
+      top: 84px;
+    }
+    .filter-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #0a1628;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .filter-group { margin-bottom: 18px; }
+    .filter-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 8px;
+    }
+    .filter-search {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #f5f7fa;
+      border: 1px solid #e9eef5;
+      border-radius: 8px;
+      padding: 8px 12px;
+      margin-bottom: 18px;
+    }
+    .filter-search input {
+      border: none;
+      background: transparent;
+      font-family: 'Poppins', sans-serif;
+      font-size: 12px;
+      color: #333;
+      outline: none;
+      width: 100%;
+    }
+    .filter-search input::placeholder { color: #bbb; }
+    .filter-select {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1px solid #e9eef5;
+      border-radius: 8px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 13px;
+      color: #333;
+      background: white;
+      cursor: pointer;
+      outline: none;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+    }
+    .filter-check-group { display: flex; flex-direction: column; gap: 10px; }
+    .filter-check {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: #444;
+      cursor: pointer;
+    }
+    .filter-check input[type="checkbox"] {
+      width: 16px; height: 16px;
+      accent-color: #1a56db;
+      cursor: pointer;
+    }
+    .btn-filter {
+      width: 100%;
+      background: #1a56db;
+      color: white;
+      border: none;
+      padding: 11px;
+      border-radius: 8px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-top: 4px;
+    }
+    .btn-filter:hover { background: #1648c0; }
+    .btn-clear {
+      width: 100%;
+      background: transparent;
+      color: #888;
+      border: 1px solid #e9eef5;
+      padding: 9px;
+      border-radius: 8px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-top: 8px;
+    }
+    .btn-clear:hover { border-color: #ccc; color: #555; }
+
+.animals-section { min-width: 0; }
+
+    .results-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .results-count { font-size: 13px; color: rgba(255,255,255,0.6); }
+    .results-count strong { color: white; font-weight: 600; }
+    .sort-select {
+      padding: 7px 12px;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 8px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 12px;
+      color: rgba(255,255,255,0.7);
+      background: rgba(255,255,255,0.06);
+      cursor: pointer;
+      outline: none;
+    }
+
+.pets-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .pet-card {
+      background: white;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid #e9eef5;
+      transition: box-shadow 0.2s, transform 0.2s;
+      cursor: pointer;
+    }
+    .pet-card:hover {
+      box-shadow: 0 8px 28px rgba(0,0,0,0.18);
+      transform: translateY(-2px);
+    }
+    .pet-card-img {
+      position: relative;
+      height: 180px;
+    }
+    .pet-card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .pet-status {
+      position: absolute;
+      top: 10px; left: 10px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(4px);
+      color: #22c55e;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+    .status-dot { width: 6px; height: 6px; background: #22c55e; border-radius: 50%; }
+    .pet-fav {
+      position: absolute;
+      top: 10px; right: 10px;
+      width: 32px; height: 32px;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(4px);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      color: #ccc;
+      transition: color 0.2s;
+    }
+    .pet-fav:hover { color: #ef4444; }
+
+    .pet-body { padding: 14px; }
+    .pet-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+    .pet-name { font-size: 15px; font-weight: 700; color: #0a1628; }
+    .pet-breed { font-size: 12px; color: #888; margin-bottom: 2px; }
+    .pet-age-badge {
+      background: #eff6ff;
+      color: #1a56db;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+
+    .pet-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #f0f4f8;
+    }
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      color: #888;
+    }
+
+    .pet-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+    .pet-tag {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: 500;
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+    .tag-green  { background: #f0fdf4; color: #16a34a; }
+    .tag-blue   { background: #eff6ff; color: #1a56db; }
+    .tag-orange { background: #fff7ed; color: #ea580c; }
+    .tag-red    { background: #fef2f2; color: #dc2626; }
+
+    .pet-btn {
+      width: 100%;
+      background: #1a56db;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 8px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .pet-btn:hover { background: #1648c0; }
+
+.pagination {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .page-btn {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Poppins', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      border: 1px solid rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.6);
+      background: rgba(255,255,255,0.06);
+      transition: all 0.2s;
+    }
+    .page-btn:hover { background: rgba(255,255,255,0.12); color: white; }
+    .page-btn.active { background: #1a56db; color: white; border-color: #1a56db; }
+    .page-btn.arrow { color: rgba(255,255,255,0.5); }
+
+footer {
+      background: white;
+      border-top: 1px solid #e9eef5;
+      padding: 16px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: auto;
+    }
+    .footer-left { display: flex; align-items: center; gap: 12px; }
+    .footer-badge {
+      width: 36px; height: 36px;
+      background: #0a1628;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      color: white;
+      flex-shrink: 0;
+    }
+    .footer-info { font-size: 12px; color: #888; line-height: 1.5; }
+    .footer-info strong { color: #333; }
+    .footer-copy { font-size: 12px; color: #bbb; }
+
+.hamburger-btn {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: #f5f7fa;
+      border: 1px solid #e9eef5;
+      border-radius: 8px;
+      padding: 8px 9px;
+      margin-right: 8px;
+    }
+    .hamburger-btn span { display: block; width: 18px; height: 2px; background: #374151; border-radius: 2px; }
+
+.sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 99;
+    }
+    .sidebar-overlay.show { display: block; }
+
+@media (max-width: 1200px) {
+      .pets-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 1024px) {
+      .animals-layout { grid-template-columns: 1fr; }
+      .filter-panel { position: static; }
+    }
+    @media (max-width: 768px) {
+      .sidebar { transform: translateX(-240px); transition: transform 0.3s ease; }
+      .sidebar.open { transform: translateX(0); }
+      .main { margin-left: 0; }
+      .hamburger-btn { display: flex; }
+      .topbar { padding: 0 16px; }
+      .search-box { display: none; }
+      .content { padding: 16px; }
+      .pets-grid { grid-template-columns: repeat(2, 1fr); }
+      .page-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+      footer { flex-direction: column; gap: 8px; padding: 14px 16px; }
+      .footer-copy { display: none; }
+    }
+    @media (max-width: 480px) {
+      .pets-grid { grid-template-columns: 1fr; }
+      .topbar-title span { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <img src="essentials uiux/image 42.png" alt="Projeto ARCA" style="height: 120px; width: auto; object-fit: contain;">
+  </div>
+
+  <nav class="sidebar-nav">
+    <div class="nav-label">Principal</div>
+
+    <a href="simples.html" class="nav-link">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+      Início
+    </a>
+
+    <a href="animais.html" class="nav-link active">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="4" r="2"/><circle cx="18" cy="8" r="2"/><circle cx="20" cy="16" r="2"/><path d="M9 10a5 5 0 0 1 5 5v3.5a3.5 3.5 0 0 1-6.84 1.045Q6.52 17.48 4.46 16.84A3.5 3.5 0 0 1 5.5 10Z"/></svg>
+      Animais
+    </a>
+
+    <a href="#" class="nav-link">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/></svg>
+      Adoções
+    </a>
+
+    <a href="#" class="nav-link">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 2 4 4"/><path d="m17 7 3-3"/><path d="M19 9 8.7 19.3c-1 1-2.5 1-3.4 0l-.6-.6c-1-1-1-2.5 0-3.4L15 5"/><path d="m9 11 4 4"/><path d="m5 19-3 3"/><path d="m14 4 6 6"/></svg>
+      Saúde
+    </a>
+
+    <a href="#" class="nav-link">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg>
+      Agenda
+    </a>
+
+    <div class="nav-label">Suporte</div>
+
+    <a href="#" class="nav-link">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+      Sobre
+    </a>
+  </nav>
+
+  <a href="simples.html" class="sidebar-footer">
+    <div class="sb-avatar">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>
+    </div>
+    <div>
+      <div class="sb-name">Administrador</div>
+      <div class="sb-role">Prefeitura da Serra</div>
+    </div>
+  </a>
+</aside>
+<div class="sidebar-overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+<div class="main">
+
+<header class="topbar">
+    <button class="hamburger-btn" onclick="toggleSidebar()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="topbar-title">Animais <span>/ Todos os animais</span></div>
+    <div class="topbar-right">
+      <div class="search-box">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" placeholder="Pesquisar animais...">
+      </div>
+      <div class="icon-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M11.68 2.009A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673c-.824-.85-1.678-1.731-2.21-3.348"/><circle cx="18" cy="5" r="3"/></svg>
+        <div class="notif-dot"></div>
+      </div>
+      <div class="user-chip">
+        <div class="user-chip-avatar">
+          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>
+        </div>
+        <span>Usuário</span>
+      </div>
+    </div>
+  </header>
+
+<main class="content">
+
+<div class="page-header">
+      <div>
+        <h2>Animais Cadastrados</h2>
+        <p>128 animais disponíveis para adoção</p>
+      </div>
+      <button class="btn-add" onclick="window.location.href='cadastro.html'">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>
+        Cadastrar animal
+      </button>
+    </div>
+
+<div class="animals-layout">
+
+<div class="filter-panel">
+        <div class="filter-title">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1a56db" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+          Filtros
+        </div>
+
+        <div class="filter-search">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <input type="text" placeholder="Buscar por nome ou raça...">
+        </div>
+
+        <div class="filter-group">
+          <div class="filter-label">Espécie</div>
+          <select class="filter-select">
+            <option>Todas</option>
+            <option>Cão</option>
+            <option>Gato</option>
+            <option>Outro</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <div class="filter-label">Idade</div>
+          <select class="filter-select">
+            <option>Qualquer</option>
+            <option>Filhote (0–1 ano)</option>
+            <option>Jovem (1–3 anos)</option>
+            <option>Adulto (3–7 anos)</option>
+            <option>Idoso (7+ anos)</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <div class="filter-label">Sexo</div>
+          <select class="filter-select">
+            <option>Todos</option>
+            <option>Macho</option>
+            <option>Fêmea</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <div class="filter-label">Características</div>
+          <div class="filter-check-group">
+            <label class="filter-check">
+              <input type="checkbox"> Amigável com crianças
+            </label>
+            <label class="filter-check">
+              <input type="checkbox"> Bom para guarda
+            </label>
+            <label class="filter-check">
+              <input type="checkbox"> Vacinado
+            </label>
+            <label class="filter-check">
+              <input type="checkbox"> Castrado
+            </label>
+          </div>
+        </div>
+
+        <button class="btn-filter">Aplicar filtros</button>
+        <button class="btn-clear">Limpar filtros</button>
+      </div>
+
+<div class="animals-section">
+
+        <div class="results-bar">
+          <div class="results-count">Mostrando <strong>9</strong> de 128 animais</div>
+          <select class="sort-select">
+            <option>Mais recentes</option>
+            <option>Nome A–Z</option>
+            <option>Mais jovens</option>
+            <option>Mais velhos</option>
+          </select>
+        </div>
+
+        <div class="pets-grid">
+
+<div class="pet-card">
+            <div class="pet-card-img">
+              <img src="https://images.unsplash.com/photo-1605568427561-40dd23c2acea?w=400" alt="Gudan">
+              <div class="pet-status"><div class="status-dot"></div> Disponível</div>
+              <div class="pet-fav">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/></svg>
+              </div>
+            </div>
+            <div class="pet-body">
+              <div class="pet-header">
+                <div>
+                  <div class="pet-name">Gudan</div>
+                  <div class="pet-breed">Husky Siberiano</div>
+                </div>
+                <div class="pet-age-badge">3 anos</div>
+              </div>
+              <div class="pet-meta">
+                <div class="meta-item">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3h5v5"/><path d="m21 3-6.75 6.75"/><circle cx="10" cy="14" r="6"/></svg>
+                  Macho
+                </div>
+                <div class="meta-item">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="4" r="2"/><circle cx="18" cy="8" r="2"/><circle cx="20" cy="16" r="2"/><path d="M9 10a5 5 0 0 1 5 5v3.5a3.5 3.5 0 0 1-6.84 1.045Q6.52 17.48 4.46 16.84A3.5 3.5 0 0 1 5.5 10Z"/></svg>
+                  Cão
+                </div>
+              </div>
+              <div class="pet-tags">
+                <span class="pet-tag tag-green">Amigável com crianças</span>
+                <span class="pet-tag tag-blue">Vacinado</span>
+              </div>
+              <button class="pet-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/></svg>
+                Quero adotar
+              </button>
+            </div>
+          </div>
+
+<div class="pet-card">
+            <div class="pet-card-img">
+              <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=400" alt="Miau">
+              <div class="pet-status"><div class="status-dot"></div> Disponível</div>
+              <div class="pet-fav">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/></svg>
+              </div>
+            </div>
+            <div class="pet-body">
+              <div class="pet-header">
+                <div>
+                  <div class="pet-name">Miau</div>
+                  <div class="pet-breed">Siamês</div>
+                </div>
+                <div class="pet-age-badge">4 meses</div>
+              </div>
+              <div class="pet-meta">
+                <div class="meta-item">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15v7"/><path d="M9 19h6"/><circle cx="12" cy="9" r="6"/></svg>
+                  Fêmea
+                </div>
+                <div class="meta-item">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5c.67 0 1.35.09 2 .26 1.78-2 5.03-2.84 6.42-2.26 1.4.58-.42 7-.42 7 .57 1.07 1 2.24 1 3.44C21 17.9 16.97 21 12 21s-9-3-9-7.56c0-1.25.5-2.4 1-3.44 0 0-1.89-6.42-.5-7 1.39-.58 4.72.23 6.5 2.23A9.04 9.04 0 0 1 12 5Z"/></svg>
+                  Gato
+                </div>
+              </div>
+              <div class="pet-tags">
+                <span class="pet-tag tag-green">Amigável com crianças</span>
+                <span class="pet-tag tag-blue">Castrada</span>
+              </div>
+              <button class="pet-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/></svg>
+                Quero adotar
+              </button>
+            </div>
+          </div>
+
+<div class="pet-card">
+            <div class="pet-card-img">
+              <img src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=400" alt="Rex">
+              <div class="pet-status"><div class="status-dot"></div> Disponível</div>
+              <div class="pet-fav">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/></svg>
+              </div>
+            </div>
+            <div class="pet-body">
+              <div class="pet-header">
+                <div>
+                  <div class="pet-name">Rex</div>
+                  <div class="pet-breed">Labrador</div>
+                </div>
+                <div class="pet-age-badge">4 anos</div>
+              </div>
+              <div class="pet-meta">
+                <div class="meta-item">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3h5v5"/><path d="m21 3-6.75 6.75"/><circle cx="10" cy="14" r="6"/></svg>
+                  Macho
+                </div>
+                <div class="meta-item">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="4" r="2"/><circle cx="18" cy="8" r="2"/><circle cx="20" cy="16" r="2"/><path d="M9 10a5 5 0 0 1 5 5v3.5a3.5 3.5 0 0 1-6.84 1.045Q6.52 17.48 4.46 16.84A3.5 3.5 0 0 1 5.5 10Z"/></svg>
+                  Cão
+                </div>
+              </div>
+              <div class="pet-tags">
+                <span class="pet-tag tag-orange">Extremamente agitado</span>
+                <span class="pet-tag tag-blue">Vacinado</span>
+              </div>
+              <button class="pet-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/></svg>
+                Quero adotar
+              </button>
+            </div>
+          </div>
+
+<div class="pet-card">
+            <div class="pet-card-img">
+              <img src="https://images.unsplash.com/photo-1552053831-71594a27632d?w=400" alt="Thor">
+              <div class="pet-status"><div class="status-dot"></div> Disponível</div>
+              <div class="pet-fav">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/></svg>
+              </div>
+            </div>
+            <div class="pet-body">
+              <div class="pet-header">
+                <div>
+                  <div class="pet-name">Thor</div>
+                  <div class="pet-breed">Pastor Alemão</div>
+                </div>
+                <div class="pet-age-badge">3 anos</div>
+              </div>
+              <div class="pet-meta">
+                <div class="meta-item">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3h5v5"/><path d="m21 3-6.75 6.75"/><circle cx="10" cy="14" r="6"/></svg>
+                  Macho
+                </div>
+                <div class="meta-item">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="4" r="2"/><circle cx="18" cy="8" r="2"/><circle cx="20" cy="16" r="2"/><path d="M9 10a5 5 0 0 1 5 5v3.5a3.5 3.5 0 0 1-6.84 1.045Q6.52 17.48 4.46 16.84A3.5 3.5 0 0 1 5.5 10Z"/></svg>
+                  Cão
+                </div>
+              </div>
+              <div class="pet-tags">
+                <span class="pet-tag tag-green">Bom para guarda</span>
+                <span class="pet-tag tag-blue">Vacinado</span>
+                <span class="pet-tag tag-blue">Castrado</span>
+              </div>
+              <button class="pet-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/></svg>
+                Quero adotar
+              </button>
+            </div>
+          </div>
+
+<div class="pet-card">
+            <div class="pet-card-img">
+              <img src="https://images.unsplash.com/photo-1574158622682-e40e69881006?w=400" alt="Nala">
+              <div class="pet-status"><div class="status-dot"></div> Disponível</div>
+              <div class="pet-fav">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/></svg>
+              </div>
+            </div>
+            <div class="pet-body">
+              <div class="pet-header">
+                <div>
+                  <div class="pet-name">Nala</div>
+                  <div class="pet-breed">Persa</div>
+                </div>
+                <div class="pet-age-badge">2 anos</div>
+              </div>
+              <div class="pet-meta">
+                <div class="meta-item">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15v7"/><path d="M9 19h6"/><circle cx="12" cy="9" r="6"/></svg>
+                  Fêmea
+                </div>
+                <div class="meta-item">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5c.67 0 1.35.09 2 .26 1.78-2 5.03-2.84 6.42-2.26 1.4.58-.42 7-.42 7 .57 1.07 1 2.24 1 3.44C21 17.9 16.97 21 12 21s-9-3-9-7.56c0-1.25.5-2.4 1-3.44 0 0-1.89-6.42-.5-7 1.39-.58 4.72.23 6.5 2.23A9.04 9.04 0 0 1 12 5Z"/></svg>
+                  Gato
+                </div>
+              </div>
+              <div class="pet-tags">
+                <span class="pet-tag tag-green">Amigável com crianças</span>
+                <span class="pet-tag tag-blue">Castrada</span>
+              </div>
+              <button class="pet-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/></svg>
+                Quero adotar
+              </button>
+            </div>
+          </div>
+
+<div class="pet-card">
+            <div class="pet-card-img">
+              <img src="https://images.unsplash.com/photo-1518717758536-85ae29035b6d?w=400" alt="Duke">
+              <div class="pet-status"><div class="status-dot"></div> Disponível</div>
+              <div class="pet-fav">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/></svg>
+              </div>
+            </div>
+            <div class="pet-body">
+              <div class="pet-header">
+                <div>
+                  <div class="pet-name">Duke</div>
+                  <div class="pet-breed">Golden Retriever</div>
+                </div>
+                <div class="pet-age-badge">1 ano</div>
+              </div>
+              <div class="pet-meta">
+                <div class="meta-item">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3h5v5"/><path d="m21 3-6.75 6.75"/><circle cx="10" cy="14" r="6"/></svg>
+                  Macho
+                </div>
+                <div class="meta-item">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="4" r="2"/><circle cx="18" cy="8" r="2"/><circle cx="20" cy="16" r="2"/><path d="M9 10a5 5 0 0 1 5 5v3.5a3.5 3.5 0 0 1-6.84 1.045Q6.52 17.48 4.46 16.84A3.5 3.5 0 0 1 5.5 10Z"/></svg>
+                  Cão
+                </div>
+              </div>
+              <div class="pet-tags">
+                <span class="pet-tag tag-green">Amigável com crianças</span>
+                <span class="pet-tag tag-blue">Vacinado</span>
+              </div>
+              <button class="pet-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/></svg>
+                Quero adotar
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+<div class="pagination">
+          <button class="page-btn arrow">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+          </button>
+          <button class="page-btn active">1</button>
+          <button class="page-btn">2</button>
+          <button class="page-btn">3</button>
+          <button class="page-btn">...</button>
+          <button class="page-btn">14</button>
+          <button class="page-btn arrow">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+<footer>
+    <div class="footer-left">
+      <div class="footer-badge">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="M9 12h6"/><path d="M12 9v6"/></svg>
+      </div>
+      <div class="footer-info">
+        <strong>Prefeitura Municipal da Serra</strong><br>
+        Projeto ARCA — Acolhimento e Resgate de Companheiros Animais
+      </div>
+    </div>
+    <div class="footer-copy">© 2026 Projeto ARCA · Todos os direitos reservados</div>
+  </footer>
+
+</div>
+
+<script>
+  document.querySelectorAll('.pet-btn').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      window.location.href = '../fluxo%20user/perfil_animal.html';
+    });
+  });
+
+  document.querySelectorAll('.pet-card').forEach(function(card) {
+    card.addEventListener('click', function() {
+      window.location.href = '../fluxo%20user/perfil_animal.html';
+    });
+  });
+
+  function toggleSidebar() {
+    document.querySelector('.sidebar').classList.toggle('open');
+    document.getElementById('overlay').classList.toggle('show');
+  }
+</script>
+</body>
+</html>

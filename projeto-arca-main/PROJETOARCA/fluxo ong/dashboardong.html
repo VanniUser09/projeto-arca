@@ -1,0 +1,234 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projeto ARCA — Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Poppins', sans-serif; background: #f3f4f6; color: #1a2b4a; }
+
+nav {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 6px 32px;
+      background: #fff;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .logo-nav-imagem { height: 90px; }
+    .links-navegacao {
+      display: flex;
+      list-style: none;
+      flex: 1;
+      justify-content: center;
+      gap: 4px;
+    }
+    .links-navegacao a {
+      text-decoration: none;
+      color: #374151;
+      font-size: 16px;
+      font-weight: 500;
+      padding: 6px 11px;
+      border-radius: 6px;
+    }
+    .links-navegacao a:hover { background: #eff4ff; color: #1a56db; }
+
+.conteudo { padding: 28px 40px; }
+
+    .grade-principal {
+      margin-bottom: 24px;
+    }
+
+.secao {
+      background: white;
+      border-radius: 14px;
+      border: 1px solid #e9eef5;
+      padding: 22px;
+    }
+    .cabecalho-secao {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+    .titulo-secao { font-size: 15px; font-weight: 600; color: #0a1628; }
+    .link-ver-mais { font-size: 13px; color: #1a56db; font-weight: 500; text-decoration: none; }
+
+.grade-animais { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .cartao-animal {
+      border: 1px solid #e9eef5;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: box-shadow 0.2s;
+    }
+    .cartao-animal:hover { box-shadow: 0 4px 18px rgba(0,0,0,0.08); }
+    .cartao-animal img { width: 100%; height: 148px; object-fit: cover; }
+    .corpo-cartao { padding: 12px; }
+    .etiqueta-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: #f0fdf4;
+      color: #22c55e;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-bottom: 8px;
+    }
+    .ponto-status { width: 6px; height: 6px; background: #22c55e; border-radius: 50%; }
+    .nome-animal { font-size: 14px; font-weight: 600; color: #0a1628; margin-bottom: 6px; }
+    .informacoes-animal { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+    .item-informacao { display: flex; align-items: center; gap: 4px; font-size: 11px; color: #888; }
+    .etiquetas { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+    .etiqueta {
+      background: #eff6ff;
+      color: #1a56db;
+      font-size: 10px;
+      font-weight: 500;
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+    .botao-perfil {
+      display: block;
+      width: 100%;
+      background: #1a56db;
+      color: white;
+      padding: 9px;
+      border-radius: 8px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      text-align: center;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .botao-perfil:hover { background: #1648c0; }
+
+footer {
+      background: #fff;
+      border-top: 1px solid #f0f0f0;
+      padding: 6px 20px;
+      display: flex;
+      align-items: center;
+    }
+    .rodape-direitos {
+      font-size: 12px;
+      color: #9ca3af;
+      text-align: center;
+      flex: 1;
+    }
+
+@media (max-width: 1100px) {
+      .grade-animais { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .conteudo { padding: 16px; }
+      .links-navegacao { display: none; }
+      .grade-animais { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 480px) {
+      .grade-animais { grid-template-columns: 1fr; }
+      nav { padding: 6px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="../../index.html">
+    <img src="../elementos UIUX/image 42.png" alt="Projeto ARCA" class="logo-nav-imagem">
+  </a>
+
+  <div class="links-navegacao">
+    <a href="homeong.html">Início</a>
+    <a href="animais.html">Pets para Adoção</a>
+    <a href="#">ONGs</a>
+    <a href="#">Denunciar</a>
+    <a href="#">Minha Adoção</a>
+    <a href="#">Painel do Administrador</a>
+  </div>
+
+</nav>
+
+<main class="conteudo">
+
+  <div class="grade-principal">
+
+    <div class="secao">
+      <div class="cabecalho-secao">
+        <div class="titulo-secao">Pets disponíveis para adoção</div>
+        <a href="animais.html" class="link-ver-mais">Ver todos →</a>
+      </div>
+      <div class="grade-animais">
+
+        <div class="cartao-animal">
+          <img src="https://images.unsplash.com/photo-1552053831-71594a27632d?w=300" alt="Thor">
+          <div class="corpo-cartao">
+            <div class="etiqueta-status"><div class="ponto-status"></div> Disponível</div>
+            <div class="nome-animal">Thor</div>
+            <div class="informacoes-animal">
+              <div class="item-informacao">Macho</div>
+              <div class="item-informacao">Cão · 3 anos</div>
+            </div>
+            <div class="etiquetas">
+              <span class="etiqueta">Vacinado</span>
+              <span class="etiqueta">Castrado</span>
+            </div>
+            <a href="../fluxo user/perfil_animal.html" class="botao-perfil">Ver perfil →</a>
+          </div>
+        </div>
+
+        <div class="cartao-animal">
+          <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=300" alt="Mia">
+          <div class="corpo-cartao">
+            <div class="etiqueta-status"><div class="ponto-status"></div> Disponível</div>
+            <div class="nome-animal">Mia</div>
+            <div class="informacoes-animal">
+              <div class="item-informacao">Fêmea </div>
+              <div class="item-informacao">Gato · 1 ano</div>
+            </div>
+            <div class="etiquetas">
+              <span class="etiqueta">Vacinada</span>
+              <span class="etiqueta">Castrada</span>
+            </div>
+            <a href="../fluxo user/perfil_animal.html" class="botao-perfil">Ver perfil →</a>
+          </div>
+        </div>
+
+        <div class="cartao-animal">
+          <img src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=300" alt="Bob">
+          <div class="corpo-cartao">
+            <div class="etiqueta-status"><div class="ponto-status"></div> Disponível</div>
+            <div class="nome-animal">Bob</div>
+            <div class="informacoes-animal">
+              <div class="item-informacao">Macho</div>
+              <div class="item-informacao">Cão · 2 anos</div>
+            </div>
+            <div class="etiquetas">
+              <span class="etiqueta">Vacinado</span>
+            </div>
+            <a href="../fluxo user/perfil_animal.html" class="botao-perfil">Ver perfil →</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+<footer>
+  <p class="rodape-direitos">
+    © 2026 Projeto ARCA · Prefeitura Municipal da Serra · Contato: (27) 6000-0000 | contato@arca.com
+  </p>
+</footer>
+
+</body>
+</html>

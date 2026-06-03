@@ -1,0 +1,200 @@
+﻿
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
+}
+
+.pag-login {
+    background-color: #0b1d5a;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-card {
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 420px;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logo-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.logo-icon img {
+    width: 135px;
+    height: 105px;
+    object-fit: cover;
+    border-end-end-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.texto-logo h1 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #0b1d5a;
+    margin-bottom: 5px;
+    
+}
+
+.texto-logo p {
+    font-size: 0.7rem;
+    color: #0b1d5a;
+    letter-spacing: 1px;
+}
+
+.conteudo-login h2 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+form {
+    width: 100%;
+}
+
+.input {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.input label {
+    display: block;
+    font-size: 0.8rem;
+    color: #333;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.input input {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid#ddd;
+    border-radius: 11px;
+    font-size: 0.9rem;
+}
+
+.input input:focus {
+    outline: none;
+    border-color: #0b1d5a;
+}
+
+.options-line {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    font-size: 14px;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+}
+
+.remember-me input {
+    margin-right: .5rem;
+}
+
+.redefinir-senha:hover {
+    color: #1a3c7a;
+    text-decoration: none;
+    font-weight: 600;
+    
+}
+
+.redefinir-senha {
+    color: #0b1d5a;
+    transition:color 0.3s ease;
+}
+
+.botao-login {
+    width: 100%;
+    background-color: #0b1d5a;
+    color: #ffffff;
+    border: none;
+    border-radius: .5rem;
+    padding: 1rem;
+    font-size: 1rem;
+    font: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.botao-login:hover {
+    background-color: #1a3c7a
+}
+
+.signup-link {
+    width: 100%;
+    text-align: center;
+    margin-top: 1.3rem;
+    font-size: 1rem;
+    color: #333;
+}
+
+.signup-link a {
+    color: #0b1d5a;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.signup-link:hover {
+    color: #1a3c7a;
+    text-decoration: none;
+}
+
+.popup-fundo{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #0b1d5a;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+.popup-conteudo{
+    background-color: white;
+    padding: 3rem;
+    border-radius: 1rem;
+    text-align: center;
+    max-width: 20rem;
+    box-shadow: 0 10px 30px #0b1d5a;
+}
+
+.popup-conteudo h3{
+    color: #0b1d5a;
+    margin-bottom: .8rem;
+    font-size: 1.3rem;
+}
+.popup-conteudo p{
+    font-size: .9rem;
+    color: #333;
+    margin-bottom: 1.4rem;
+}
+

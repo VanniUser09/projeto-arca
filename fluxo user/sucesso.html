@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sucesso - Projeto Arca</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../style.css">
+    <style>
+        * { 
+            margin: 0; padding: 0; box-sizing: border-box; 
+        }
+
+        body { 
+            font-family: 'Poppins', sans-serif; background: #f4f7fb; color: #1a2b4a; 
+        }
+
+        .pag-sucesso { 
+            display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; 
+        }
+
+        .sucesso-card { 
+            background: #fff; border-radius: 14px; border: 1px solid #e9eef5; padding: 40px; max-width: 500px; width: 100%; text-align: center; 
+        }
+
+        .titulo-sucesso { 
+            font-size: 28px; font-weight: 600; color: #10b981; margin-bottom: 16px; 
+        }
+
+        .mensagem-sucesso { 
+            font-size: 16px; color: #666; margin-bottom: 30px; line-height: 1.5; 
+        }
+
+        .botao-voltar { 
+            background: #1a56db; color: #fff; border: none; padding: 12px 30px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 14px; text-decoration: none; display: inline-block; 
+        }
+
+        .botao-voltar:hover {
+            background: #1449c1;
+        }
+
+        @media (max-width: 480px) {
+            .sucesso-card {
+                padding: 28px 18px;
+            }
+            .titulo-sucesso {
+                font-size: 22px;
+            }
+            .mensagem-sucesso {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="pag-sucesso">
+        <div class="sucesso-card">
+            <h1 class="titulo-sucesso">Cadastro Realizado!</h1>
+            <p class="mensagem-sucesso">
+                Seu cadastro foi realizado com sucesso. Bem-vindo à família ARCA!
+            </p>
+            <a href="./homeuser1.html" class="botao-voltar">Voltar ao Início</a>
+        </div>
+    </div>
+</body>
+</html>

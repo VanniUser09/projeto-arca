@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - Projeto ARCA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+   
+    <script src="./crud.js" defer></script>
+</head>
+
+<body>
+    <div class="pag-login">
+        <div class="login-card">
+
+            <div class="logo-section">
+                <div class="logo-icon">
+                    <span style="color: #0b1d5a; font-size: 20px;">
+                        <img src="./img/logo_projeto_arca.png" alt="cachorro e gato">
+                    </span>
+                </div>
+                <div class="texto-logo">
+                    <h1>ARCA</h1>
+                    <p>RESGATE • ADOÇÃO • CUIDADO</p>
+                </div>
+            </div>
+
+            <div class="conteudo-login">
+                <h2>Crie a sua conta</h2>
+                <p>Cadastre-se para ajudar os nossos animais!</p>
+            </div>
+            <br>
+
+            <form id="form-cadastro">
+                <div class="input">
+                    <label for="nome">Nome Completo</label>
+                    <input type="text" id="nome" placeholder="Digite o seu nome completo" required>
+                </div>
+
+                <div class="input">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" placeholder="Digite o seu melhor e-mail" required>
+                </div>
+
+                <div class="input">
+                    <label for="idade">Idade</label>
+                    <input type="number" id="idade" placeholder="Digite sua idade" required>
+                </div>
+
+                <div class="input">
+                    <label for="password">Senha</label>
+                    <input type="password" id="password" placeholder="Crie uma senha segura" required>
+                </div>
+
+                <button type="submit" class="botao-login" style="margin-top: 10px;">Cadastrar</button>
+            </form>
+
+            <div class="signup-link">
+                <a href="index.html">Já tem uma conta? Faça login aqui</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="popup-sucesso" class="popup-fundo">
+        <div class="popup-conteudo">
+            <h3>Cadastro Realizado!</h3>
+            <p>Sua conta foi criada com Sucesso! Bem-vindo à ARCA!</p>
+            <button id="btn-ir-login" class="botao-login">Ir para o login</button>
+        </div>
+    </div>
+</body>
+
+</html>

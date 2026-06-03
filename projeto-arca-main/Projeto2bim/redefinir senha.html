@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Nova Senha - Projeto ARCA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+    <script src="./popup.js" defer></script>
+</head>
+
+<body>
+    <div class="pag-login">
+        <div class="login-card">
+            
+            <div class="logo-section">
+                <div class="logo-icon">
+                    <span style="color: #0b1d5a; font-size: 20px;">
+                        <img src="./img/logo_projeto_arca.png" alt="cachorro e gato">
+                    </span>
+                </div>
+                <div class="texto-logo">
+                    <h1>ARCA</h1>
+                    <p>RESGATE • ADOÇÃO • CUIDADO</p>
+                </div>
+            </div>
+
+            <div class="conteudo-login">
+                <h2>Crie uma nova senha</h2>
+                <p>Sua nova senha deve ser diferente das anteriores.</p>
+            </div>
+            <br>
+
+            <form>
+                <div class="input">
+                    <label for="new-password">Nova Senha</label>
+                    <input type="password" id="new-password" placeholder="Digite a nova senha" required>
+                </div>
+                
+                <div class="input">
+                    <label for="confirm-password">Confirmar Nova Senha</label>
+                    <input type="password" id="confirm-password" placeholder="Repita a nova senha" required>
+                </div>
+
+                <button type="submit" class="botao-login" style="margin-top: 10px;">Salvar Nova Senha</button>
+            </form>
+
+            <div class="signup-link">
+                <a href="index.html">← Voltar para o Login</a>
+            </div>
+            
+        </div>
+    </div>
+       <div id="popup-sucesso" class="popup-fundo">
+        <div class="popup-conteudo">
+            <h3>Senha Redefinida com Sucesso!</h3>
+            <button id="btn-ir-login" class="botao-login">Ir pra o login</button>
+        </div>
+    </div>
+</body>
+
+</html>

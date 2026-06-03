@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animais Disponíveis - Projeto ARCA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="animais.css">
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo-nav">
+        <img src="PROJETOARCA/elementos UIUX/image 42.png" alt="Projeto ARCA" class="logo-nav-imagem">
+        </a>
+
+    <div class="nav-links">
+        <a href="index.html">Início</a>
+        <a href="animais.html" class="ativo">Pets para Adoção</a>
+        <a href="ongs.html">ONGs</a>
+        <a href="denunciar.html">Denunciar</a>
+        <a href="minha-adocao.html">Minha Adoção</a>
+    </div>
+
+    <div class="usuario-logado">
+      <span>Olá, Usuário</span>
+      <button onclick="abrirMenuUsuario()">▼</button>
+
+      <div class="menu-usuario" id="menuUsuario">
+        <a href="perfil.html">Meu Perfil</a>
+        <a href="index.html">Sair</a>
+      </div>
+    </div>
+    </nav>
+
+<section class="topoanimais">
+  <h1>Animais Disponíveis</h1>
+  <p>Encontre um pet esperando por um novo lar.</p>
+
+  <div class="filtros">
+    <button onclick="filtrarAnimais('todos')">Todos</button>
+    <button onclick="filtrarAnimais('cachorro')">Cachorros</button>
+    <button onclick="filtrarAnimais('gato')">Gatos</button>
+  </div>
+</section>
+
+<section class="lista-animais">
+
+  <div class="card-animal cachorro">
+    <img src="img/thor.png" alt="Cachorro para adoção">
+    <div class="info-animal">
+      <h3>Thor</h3>
+      <p>Cachorro • Macho • 2 anos</p>
+      <span>Disponível para adoção</span>
+      <a href="thor.html">Ver detalhes</a>
+    </div>
+  </div>
+
+  <div class="card-animal gato">
+    <img src="img/mia.avif" alt="Gato para adoção">
+    <div class="info-animal">
+      <h3>Mia</h3>
+      <p>Gata • Fêmea • 1 ano</p>
+      <span>Disponível para adoção</span>
+      <a href="mia.html">Ver detalhes</a>
+    </div>
+  </div>
+
+  <div class="card-animal cachorro">
+    <img src="img/bob.webp" alt="Cachorro para adoção">
+    <div class="info-animal">
+      <h3>Bob</h3>
+      <p>Cachorro • Macho • 3 anos</p>
+      <span>Disponível para adoção</span>
+      <a href="bob.html">Ver detalhes</a>
+    </div>
+  </div>
+
+  <div class="card-animal gato">
+    <img src="img/luna.jpg" alt="Gato para adoção">
+    <div class="info-animal">
+      <h3>Luna</h3>
+      <p>Gata • Fêmea • 8 meses</p>
+      <span>Disponível para adoção</span>
+      <a href="luna.html">Ver detalhes</a>
+    </div>
+  </div>
+
+  <div class="card-animal cachorro">
+  <img src="img/rex.jpg" alt="Cachorro para adoção">
+  <div class="info-animal">
+    <h3>Rex</h3>
+    <p>Cachorro • Macho • 4 anos</p>
+    <span>Disponível para adoção</span>
+    <a href="rex.html">Ver detalhes</a>
+  </div>
+</div>
+
+<div class="card-animal cachorro">
+  <img src="img/mel.webp" alt="Cachorro para adoção">
+  <div class="info-animal">
+    <h3>Mel</h3>
+    <p>Cachorra • Fêmea • 2 anos</p>
+    <span>Disponível para adoção</span>
+    <a href="mel.html">Ver detalhes</a>
+  </div>
+</div>
+
+<div class="card-animal gato">
+  <img src="img/simba.jpeg" alt="Gato para adoção">
+  <div class="info-animal">
+    <h3>Simba</h3>
+    <p>Gato • Macho • 3 anos</p>
+    <span>Disponível para adoção</span>
+    <a href="simba.html">Ver detalhes</a>
+  </div>
+</div>
+
+<div class="card-animal cachorro">
+  <img src="img/max.jpg" alt="Cachorro para adoção">
+  <div class="info-animal">
+    <h3>Max</h3>
+    <p>Cachorro • Macho • 1 ano</p>
+    <span>Disponível para adoção</span>
+    <a href="max.html">Ver detalhes</a>
+  </div>
+</div>
+
+</section>
+
+<footer>
+  <p class="rodape-direitos">
+    © 2026 Projeto ARCA · Prefeitura Municipal da Serra · Contato: (27) 6000-0000 | contato@arca.com
+  </p>
+</footer>
+
+<script src="animais.js"></script>
+</body>
+</html>

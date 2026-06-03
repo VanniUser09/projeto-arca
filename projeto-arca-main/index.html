@@ -1,0 +1,287 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projeto ARCA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+    
+    body { font-family: 'Poppins', sans-serif; background: #fff; color: #1a2b4a; }
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 6px 32px;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo-nav-imagem { height: 90px; }
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  flex: 1;
+  justify-content: center;
+  gap: 4px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #374151;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 6px 11px;
+  border-radius: 6px;
+}
+
+.nav-links a:hover {
+  background: #eff4ff;
+  color: #1a56db;
+}
+
+.botoes-nav {
+  display: flex;
+  gap: 8px;
+}
+
+.botao-entrar {
+  color: #1a56db;
+  border: 1.5px solid #1a56db;
+  padding: 7px 16px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.botao-cadastrar {
+  background: #1a56db;
+  color: #fff;
+  border: 1.5px solid #1a56db;
+  padding: 7px 16px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.titulobanner {
+  position: relative;
+  min-height: 208px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.titulobanner-imagem-fundo {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: right center;
+}
+
+.titulobanner-caixa-texto {
+  position: relative;
+  z-index: 2; 
+  padding: 36px 56px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px; 
+  max-width: 52%;
+}
+
+.titulobanner h1 {
+  font-size: 31px;
+  font-weight: 800;
+  line-height: 1.18;
+  color: #1a2b4a;
+}
+
+.titulobanner-sub {
+  font-size: 13px;
+  color: #5a6a84;
+  line-height: 1.6;
+}
+
+.btn-titulobanner {
+  display: inline-flex;
+  align-items: center;
+  background: #1a56db;
+  color: #fff;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 8px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  width: fit-content;
+}
+
+.btn-titulobanner:hover { background: #1444c0; }
+
+.sobre {
+  padding: 52px 72px;
+  background: #fafafa;
+}
+
+.sobre-titulo {
+  text-align: center;
+  font-size: 21px;
+  font-weight: 700;
+  color: #1a2b4a;
+  margin-bottom: 42px;
+}
+
+.sobre-col h3, .sobre-parte h3 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1a56db;
+  margin-bottom: 16px;
+}
+
+.missao-texto {
+  font-size: 13px;
+  color: #555;
+  line-height: 1.78;
+}
+
+.sobre-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; 
+  gap: 72px;
+  max-width: 880px;
+  margin: 0 auto;
+}
+
+.cards-impacto {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.card-azul, .card-laranja, .card-verde {
+  padding: 14px 18px;
+  border-radius: 10px;
+  font-size: 13.5px;
+  font-weight: 500;
+}
+
+.card-azul {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.card-laranja {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.card-verde {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+footer {
+  background: #fff;
+  border-top: 1px solid #f0f0f0;
+  padding: 6px 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.rodape-logos {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.rodape-logo-arca {
+  height: 52px;
+}
+
+.rodape-direitos {
+  font-size: 12px;
+  color: #9ca3af;
+  text-align: center;
+  flex: 1; 
+}
+
+</style>
+
+</head>
+<body>
+
+<nav>
+
+<a href="index.html" class="logo-nav">
+  <img src="PROJETOARCA/elementos UIUX/image 42.png" alt="Projeto ARCA" class="logo-nav-imagem">
+</a>
+
+<div class="nav-links">
+  <a href="../projeto-arca-main/index.html">Início</a>
+  <a href="../projeto-arca-main/index.html">Pets para Adoção</a>
+  <a href="../projeto-arca-main/index.html">ONGs</a>
+  <a href="login.html">Denunciar</a>
+  <a href="login.html">Minha Adoção</a>
+</div>
+
+<div class="botoes-nav">
+  <a href="PROJETOARCA/login completo/login.html" class="botao-entrar">Entrar</a>
+  <a href="PROJETOARCA/login completo/cadastre-se aqui.html" class="botao-cadastrar">Cadastrar</a>
+</div>
+
+</nav>
+
+<div class="titulobanner">
+  <img class="titulobanner-imagem-fundo" src="PROJETOARCA/elementos UIUX/banner.png" alt="Banner Projeto ARCA">
+  <div class="titulobanner-caixa-texto">
+    <h1>Um novo lar<br>
+    transforma vidas.</h1>
+    <p class="titulobanner-sub">Adote, registre e ajude animais a encontrarem um novo começo</p>
+    <a href="cadastro.html" class="btn-titulobanner">Quero ajudar →</a>
+  </div>
+</div>
+
+<div class="sobre">
+  <h2 class="sobre-titulo">Sobre o Projeto ARCA</h2>
+  <div class="sobre-grid">
+
+    <div class="sobre-col">
+      <h3>Nossa Missão</h3>
+      <p class="missao-texto">
+        O Projeto ARCA está comprometido em criar um mundo onde todo animal tenha
+        um lar amoroso. Nós nos esforçamos para conectar indivíduos compassivos com
+        animais necessitados, apoiar o trabalho vital de organizações de bem-estar
+        animal e aumentar a conscientização sobre a posse responsável de animais de estimação.
+      </p>
+    </div>
+
+    <div class="sobre-parte">
+      <h3>Nosso Impacto</h3>
+      <div class="cards-impacto">
+        <div class="card-azul">Mais de 500 Animais Resgatados</div>
+        <div class="card-laranja">Mais de 300 Adoções Bem-sucedidas</div>
+        <div class="card-verde">Mais de 50 ONGs Parceiras</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <p class="rodape-direitos">
+    © 2026 Projeto ARCA · Prefeitura Municipal da Serra · Contato: (27) 6000-0000 | contato@arca.com
+  </p>
+</footer>
+
+</body>
+</html>

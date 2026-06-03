@@ -1,0 +1,779 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projeto ARCA — Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Poppins', sans-serif; background: #0a1628; display: flex; min-height: 100vh; }
+
+.sidebar {
+      width: 240px;
+      min-height: 100vh;
+      background: white;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0; left: 0;
+      z-index: 100;
+      border-right: 1px solid #e9eef5;
+    }
+    .sidebar-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px 16px;
+      border-bottom: 1px solid #e9eef5;
+    }
+
+    .sidebar-nav { flex: 1; padding: 16px 12px; }
+    .nav-label {
+      color: #bbb;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 0 8px;
+      margin: 20px 0 8px;
+    }
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      color: #666;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.2s;
+      margin-bottom: 3px;
+    }
+    .nav-link:hover { background: #f5f7fa; color: #0a1628; }
+    .nav-link.active { background: #1a56db; color: white; }
+    .nav-link svg { flex-shrink: 0; }
+
+    .sidebar-footer {
+      padding: 16px 20px;
+      border-top: 1px solid #e9eef5;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      transition: background 0.2s;
+      cursor: pointer;
+      position: relative;
+      z-index: 10;
+    }
+    .sidebar-footer:hover { background: #f5f7fa; }
+    .sb-avatar {
+      width: 36px; height: 36px;
+      background: #1a56db;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: white;
+      flex-shrink: 0;
+    }
+    .sb-name { color: #0a1628; font-size: 13px; font-weight: 600; }
+    .sb-role { color: #999; font-size: 11px; }
+
+.main {
+      margin-left: 240px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+.topbar {
+      background: white;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+      border-bottom: 1px solid #e9eef5;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .topbar-title { font-size: 16px; font-weight: 600; color: #0a1628; }
+    .topbar-title span { color: #999; font-weight: 400; font-size: 14px; }
+    .topbar-right { display: flex; align-items: center; gap: 10px; }
+    .search-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #f5f7fa;
+      border: 1px solid #e9eef5;
+      border-radius: 8px;
+      padding: 7px 14px;
+    }
+    .search-box input {
+      border: none;
+      background: transparent;
+      font-family: 'Poppins', sans-serif;
+      font-size: 13px;
+      color: #333;
+      outline: none;
+      width: 200px;
+    }
+    .search-box input::placeholder { color: #bbb; }
+    .icon-btn {
+      width: 38px; height: 38px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      color: #666;
+      background: #f5f7fa;
+      border: 1px solid #e9eef5;
+      cursor: pointer;
+      position: relative;
+    }
+    .notif-dot {
+      width: 8px; height: 8px;
+      background: #ef4444;
+      border-radius: 50%;
+      border: 2px solid white;
+      position: absolute;
+      top: 5px; right: 5px;
+    }
+    .user-chip {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 12px 4px 4px;
+      background: #f5f7fa;
+      border: 1px solid #e9eef5;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+    .user-chip-avatar {
+      width: 30px; height: 30px;
+      background: #1a56db;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: white;
+    }
+    .user-chip span { font-size: 13px; font-weight: 500; color: #333; }
+
+.content { padding: 24px 28px; flex: 1; }
+
+.banner {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      min-height: 200px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+    }
+    .banner-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: right center;
+    }
+    .banner-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(10,22,40,0.72) 35%, transparent 72%);
+    }
+    .banner-body {
+      position: relative;
+      z-index: 2;
+      padding: 38px 44px;
+      max-width: 52%;
+    }
+    .banner-body h1 {
+      font-size: 30px;
+      font-weight: 700;
+      color: white;
+      line-height: 1.25;
+      margin-bottom: 10px;
+    }
+    .banner-body h1 span { color: #f5a623; }
+    .banner-body p { color: rgba(255,255,255,0.78); font-size: 14px; margin-bottom: 22px; }
+    .banner-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #1a56db;
+      color: white;
+      border: none;
+      padding: 11px 24px;
+      border-radius: 8px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .banner-btn:hover { background: #1648c0; }
+
+.stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .stat-card {
+      background: white;
+      border-radius: 14px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      border: 1px solid #e9eef5;
+    }
+    .stat-icon {
+      width: 52px; height: 52px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .stat-icon.blue   { background: #eff6ff; color: #1a56db; }
+    .stat-icon.green  { background: #f0fdf4; color: #22c55e; }
+    .stat-icon.orange { background: #fff7ed; color: #f5a623; }
+    .stat-icon.red    { background: #fef2f2; color: #ef4444; }
+    .stat-val   { font-size: 28px; font-weight: 700; color: #0a1628; line-height: 1; }
+    .stat-label { font-size: 12px; color: #888; margin-top: 4px; }
+    .stat-sub   { font-size: 11px; color: #bbb; margin-top: 2px; }
+
+.main-grid {
+      display: grid;
+      grid-template-columns: 1fr 304px;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+
+.card-section {
+      background: white;
+      border-radius: 14px;
+      border: 1px solid #e9eef5;
+      padding: 22px;
+    }
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+    .section-title { font-size: 15px; font-weight: 600; color: #0a1628; }
+    .link-more { font-size: 13px; color: #1a56db; font-weight: 500; text-decoration: none; }
+
+.pets-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .pet-card {
+      border: 1px solid #e9eef5;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: box-shadow 0.2s;
+    }
+    .pet-card:hover { box-shadow: 0 4px 18px rgba(0,0,0,0.08); }
+    .pet-card img { width: 100%; height: 148px; object-fit: cover; }
+    .pet-body { padding: 12px; }
+    .pet-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: #f0fdf4;
+      color: #22c55e;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-bottom: 8px;
+    }
+    .badge-dot { width: 6px; height: 6px; background: #22c55e; border-radius: 50%; }
+    .pet-name { font-size: 14px; font-weight: 600; color: #0a1628; margin-bottom: 6px; }
+    .pet-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      color: #888;
+    }
+    .pet-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+    .pet-tag {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: #eff6ff;
+      color: #1a56db;
+      font-size: 10px;
+      font-weight: 500;
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+    .pet-btn {
+      width: 100%;
+      background: #1a56db;
+      color: white;
+      border: none;
+      padding: 9px;
+      border-radius: 8px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .pet-btn:hover { background: #1648c0; }
+
+.side-panel { display: flex; flex-direction: column; gap: 20px; }
+
+    .acao-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 11px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.15s;
+      margin-bottom: 6px;
+    }
+    .acao-item:last-child { margin-bottom: 0; }
+    .acao-item:hover { background: #f5f7fa; }
+    .acao-icon {
+      width: 46px; height: 46px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      color: white;
+      flex-shrink: 0;
+    }
+    .acao-icon.blue   { background: #1a56db; }
+    .acao-icon.green  { background: #22c55e; }
+    .acao-icon.orange { background: #f5a623; }
+    .acao-title { font-size: 14px; font-weight: 600; color: #0a1628; }
+    .acao-desc  { font-size: 12px; color: #888; margin-top: 1px; }
+
+    .notif-list { display: flex; flex-direction: column; gap: 8px; }
+    .notif-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: #f8fafc;
+    }
+    .notif-indicator {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      margin-top: 5px;
+      flex-shrink: 0;
+    }
+    .notif-text { font-size: 12px; color: #444; line-height: 1.5; }
+    .notif-time { font-size: 10px; color: #bbb; margin-top: 2px; }
+
+footer {
+      background: white;
+      border-top: 1px solid #e9eef5;
+      padding: 16px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .footer-left { display: flex; align-items: center; gap: 12px; }
+    .footer-badge {
+      width: 36px; height: 36px;
+      background: #0a1628;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      color: white;
+      flex-shrink: 0;
+    }
+    .footer-info { font-size: 12px; color: #888; line-height: 1.5; }
+    .footer-info strong { color: #333; }
+    .footer-copy { font-size: 12px; color: #bbb; }
+
+.hamburger-btn {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: #f5f7fa;
+      border: 1px solid #e9eef5;
+      border-radius: 8px;
+      padding: 8px 9px;
+      margin-right: 8px;
+    }
+    .hamburger-btn span { display: block; width: 18px; height: 2px; background: #374151; border-radius: 2px; }
+
+.sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 99;
+    }
+    .sidebar-overlay.show { display: block; }
+
+@media (max-width: 1100px) {
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .main-grid { grid-template-columns: 1fr; }
+      .pets-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .sidebar { transform: translateX(-240px); transition: transform 0.3s ease; }
+      .sidebar.open { transform: translateX(0); }
+      .main { margin-left: 0; }
+      .hamburger-btn { display: flex; }
+      .topbar { padding: 0 16px; }
+      .search-box { display: none; }
+      .content { padding: 16px; }
+      .banner-body { max-width: 100%; padding: 24px 20px; }
+      .banner-body h1 { font-size: 20px; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .main-grid { grid-template-columns: 1fr; }
+      .pets-grid { grid-template-columns: repeat(2, 1fr); }
+      footer { flex-direction: column; gap: 8px; padding: 14px 16px; }
+      .footer-copy { display: none; }
+    }
+    @media (max-width: 480px) {
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .pets-grid { grid-template-columns: 1fr; }
+      .topbar-title span { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <img src="essentials uiux/image 42.png" alt="Projeto ARCA" style="height: 120px; width: auto; object-fit: contain;">
+  </div>
+
+  <nav class="sidebar-nav">
+    <div class="nav-label">Principal</div>
+
+    <a href="simples.html" class="nav-link active">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+      Início
+    </a>
+
+    <a href="animais.html" class="nav-link">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="4" r="2"/><circle cx="18" cy="8" r="2"/><circle cx="20" cy="16" r="2"/><path d="M9 10a5 5 0 0 1 5 5v3.5a3.5 3.5 0 0 1-6.84 1.045Q6.52 17.48 4.46 16.84A3.5 3.5 0 0 1 5.5 10Z"/></svg>
+      Animais
+    </a>
+
+    <a href="#" class="nav-link">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/></svg>
+      Adoções
+    </a>
+
+    <a href="#" class="nav-link">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 2 4 4"/><path d="m17 7 3-3"/><path d="M19 9 8.7 19.3c-1 1-2.5 1-3.4 0l-.6-.6c-1-1-1-2.5 0-3.4L15 5"/><path d="m9 11 4 4"/><path d="m5 19-3 3"/><path d="m14 4 6 6"/></svg>
+      Saúde
+    </a>
+
+    <a href="#" class="nav-link">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg>
+      Agenda
+    </a>
+
+    <div class="nav-label">Suporte</div>
+
+    <a href="#" class="nav-link">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+      Sobre
+    </a>
+  </nav>
+
+  <a href="simples.html" class="sidebar-footer">
+    <div class="sb-avatar">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>
+    </div>
+    <div>
+      <div class="sb-name">Administrador</div>
+      <div class="sb-role">Prefeitura da Serra</div>
+    </div>
+  </a>
+</aside>
+<div class="sidebar-overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+<div class="main">
+
+<header class="topbar">
+    <button class="hamburger-btn" onclick="toggleSidebar()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="topbar-title">Dashboard <span>/ Início</span></div>
+    <div class="topbar-right">
+      <div class="search-box">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" placeholder="Pesquisar animais...">
+      </div>
+      <div class="icon-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M11.68 2.009A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673c-.824-.85-1.678-1.731-2.21-3.348"/><circle cx="18" cy="5" r="3"/></svg>
+        <div class="notif-dot"></div>
+      </div>
+      <div class="user-chip">
+        <div class="user-chip-avatar">
+          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>
+        </div>
+        <span>Usuário</span>
+      </div>
+    </div>
+  </header>
+
+<main class="content">
+
+<div class="banner">
+      <img class="banner-img" src="banner.png" alt="Projeto ARCA">
+      <div class="banner-overlay"></div>
+      <div class="banner-body">
+        <h1>Um novo lar<br>transforma <span>vidas.</span></h1>
+        <p>Adote, registre e ajude animais a encontrarem um novo começo.</p>
+        <button class="banner-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/></svg>
+          Quero ajudar
+        </button>
+      </div>
+    </div>
+
+<div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon blue">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="4" r="2"/><circle cx="18" cy="8" r="2"/><circle cx="20" cy="16" r="2"/><path d="M9 10a5 5 0 0 1 5 5v3.5a3.5 3.5 0 0 1-6.84 1.045Q6.52 17.48 4.46 16.84A3.5 3.5 0 0 1 5.5 10Z"/></svg>
+        </div>
+        <div>
+          <div class="stat-val">128</div>
+          <div class="stat-label">Animais Cadastrados</div>
+          <div class="stat-sub">+12 este mês</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon green">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/></svg>
+        </div>
+        <div>
+          <div class="stat-val">47</div>
+          <div class="stat-label">Adoções Realizadas</div>
+          <div class="stat-sub">25 este mês</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon orange">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 10c.7-.7 1.69 0 2.5 0a2.5 2.5 0 1 0 0-5 .5.5 0 0 1-.5-.5 2.5 2.5 0 1 0-5 0c0 .81.7 1.8 0 2.5l-7 7c-.7.7-1.69 0-2.5 0a2.5 2.5 0 0 0 0 5c.28 0 .5.22.5.5a2.5 2.5 0 1 0 5 0c0-.81-.7-1.8 0-2.5Z"/></svg>
+        </div>
+        <div>
+          <div class="stat-val">17</div>
+          <div class="stat-label">Resgates Realizados</div>
+          <div class="stat-sub">Este mês</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon red">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 2 4 4"/><path d="m17 7 3-3"/><path d="M19 9 8.7 19.3c-1 1-2.5 1-3.4 0l-.6-.6c-1-1-1-2.5 0-3.4L15 5"/><path d="m9 11 4 4"/><path d="m5 19-3 3"/><path d="m14 4 6 6"/></svg>
+        </div>
+        <div>
+          <div class="stat-val">34</div>
+          <div class="stat-label">Atendimentos Médicos</div>
+          <div class="stat-sub">5 agendados</div>
+        </div>
+      </div>
+    </div>
+
+<div class="main-grid">
+
+<div class="card-section">
+        <div class="section-header">
+          <div class="section-title">Pets disponíveis para adoção</div>
+          <a href="#" class="link-more">Ver todos →</a>
+        </div>
+        <div class="pets-grid">
+
+          <div class="pet-card">
+            <img src="https://images.unsplash.com/photo-1552053831-71594a27632d?w=300" alt="Thor">
+            <div class="pet-body">
+              <div class="pet-badge"><div class="badge-dot"></div> Disponível</div>
+              <div class="pet-name">Thor</div>
+              <div class="pet-meta">
+                <div class="meta-item">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3h5v5"/><path d="m21 3-6.75 6.75"/><circle cx="10" cy="14" r="6"/></svg>
+                  Macho
+                </div>
+                <div class="meta-item">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="4" r="2"/><circle cx="18" cy="8" r="2"/><circle cx="20" cy="16" r="2"/><path d="M9 10a5 5 0 0 1 5 5v3.5a3.5 3.5 0 0 1-6.84 1.045Q6.52 17.48 4.46 16.84A3.5 3.5 0 0 1 5.5 10Z"/></svg>
+                  Cão · 3 anos
+                </div>
+              </div>
+              <div class="pet-tags">
+                <span class="pet-tag">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 2 4 4"/><path d="m17 7 3-3"/><path d="M19 9 8.7 19.3c-1 1-2.5 1-3.4 0l-.6-.6c-1-1-1-2.5 0-3.4L15 5"/><path d="m9 11 4 4"/><path d="m5 19-3 3"/><path d="m14 4 6 6"/></svg>
+                  Vacinado
+                </span>
+                <span class="pet-tag">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><path d="M8.12 8.12 12 12"/><path d="M20 4 8.12 15.88"/><circle cx="6" cy="18" r="3"/><path d="M14.8 14.8 20 20"/></svg>
+                  Castrado
+                </span>
+              </div>
+              <button class="pet-btn">Ver perfil →</button>
+            </div>
+          </div>
+
+          <div class="pet-card">
+            <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=300" alt="Mia">
+            <div class="pet-body">
+              <div class="pet-badge"><div class="badge-dot"></div> Disponível</div>
+              <div class="pet-name">Mia</div>
+              <div class="pet-meta">
+                <div class="meta-item">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15v7"/><path d="M9 19h6"/><circle cx="12" cy="9" r="6"/></svg>
+                  Fêmea
+                </div>
+                <div class="meta-item">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5c.67 0 1.35.09 2 .26 1.78-2 5.03-2.84 6.42-2.26 1.4.58-.42 7-.42 7 .57 1.07 1 2.24 1 3.44C21 17.9 16.97 21 12 21s-9-3-9-7.56c0-1.25.5-2.4 1-3.44 0 0-1.89-6.42-.5-7 1.39-.58 4.72.23 6.5 2.23A9.04 9.04 0 0 1 12 5Z"/><path d="M8 14v.5"/><path d="M16 14v.5"/><path d="M11.25 16.25h1.5L12 17l-.75-.75Z"/></svg>
+                  Gato · 1 ano
+                </div>
+              </div>
+              <div class="pet-tags">
+                <span class="pet-tag">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 2 4 4"/><path d="m17 7 3-3"/><path d="M19 9 8.7 19.3c-1 1-2.5 1-3.4 0l-.6-.6c-1-1-1-2.5 0-3.4L15 5"/><path d="m9 11 4 4"/><path d="m5 19-3 3"/><path d="m14 4 6 6"/></svg>
+                  Vacinada
+                </span>
+                <span class="pet-tag">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><path d="M8.12 8.12 12 12"/><path d="M20 4 8.12 15.88"/><circle cx="6" cy="18" r="3"/><path d="M14.8 14.8 20 20"/></svg>
+                  Castrada
+                </span>
+              </div>
+              <button class="pet-btn">Ver perfil →</button>
+            </div>
+          </div>
+
+          <div class="pet-card">
+            <img src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=300" alt="Bob">
+            <div class="pet-body">
+              <div class="pet-badge"><div class="badge-dot"></div> Disponível</div>
+              <div class="pet-name">Bob</div>
+              <div class="pet-meta">
+                <div class="meta-item">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3h5v5"/><path d="m21 3-6.75 6.75"/><circle cx="10" cy="14" r="6"/></svg>
+                  Macho
+                </div>
+                <div class="meta-item">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="4" r="2"/><circle cx="18" cy="8" r="2"/><circle cx="20" cy="16" r="2"/><path d="M9 10a5 5 0 0 1 5 5v3.5a3.5 3.5 0 0 1-6.84 1.045Q6.52 17.48 4.46 16.84A3.5 3.5 0 0 1 5.5 10Z"/></svg>
+                  Cão · 2 anos
+                </div>
+              </div>
+              <div class="pet-tags">
+                <span class="pet-tag">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 2 4 4"/><path d="m17 7 3-3"/><path d="M19 9 8.7 19.3c-1 1-2.5 1-3.4 0l-.6-.6c-1-1-1-2.5 0-3.4L15 5"/><path d="m9 11 4 4"/><path d="m5 19-3 3"/><path d="m14 4 6 6"/></svg>
+                  Vacinado
+                </span>
+              </div>
+              <button class="pet-btn">Ver perfil →</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+<div class="side-panel">
+
+<div class="card-section">
+          <div class="section-header">
+            <div class="section-title">Ações Rápidas</div>
+          </div>
+          <div class="acao-item">
+            <div class="acao-icon blue">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="4" r="2"/><circle cx="18" cy="8" r="2"/><circle cx="20" cy="16" r="2"/><path d="M9 10a5 5 0 0 1 5 5v3.5a3.5 3.5 0 0 1-6.84 1.045Q6.52 17.48 4.46 16.84A3.5 3.5 0 0 1 5.5 10Z"/></svg>
+            </div>
+            <div>
+              <div class="acao-title">Quero Adotar</div>
+              <div class="acao-desc">Encontre seu novo melhor amigo</div>
+            </div>
+          </div>
+          <div class="acao-item">
+            <div class="acao-icon green">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>
+            </div>
+            <div>
+              <div class="acao-title">Cadastrar Animal</div>
+              <div class="acao-desc">Registre um novo animal</div>
+            </div>
+          </div>
+          <div class="acao-item">
+            <div class="acao-icon orange">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 14h2a2 2 0 0 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 16"/><path d="m14.45 13.39 5.05-4.694C20.196 8 21 6.85 21 5.75a2.75 2.75 0 0 0-4.797-1.837.276.276 0 0 1-.406 0A2.75 2.75 0 0 0 11 5.75c0 1.2.802 2.248 1.5 2.946L16 11.95"/><path d="m2 15 6 6"/><path d="m7 20 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a1 1 0 0 0-2.75-2.91"/></svg>
+            </div>
+            <div>
+              <div class="acao-title">Fazer Doação</div>
+              <div class="acao-desc">Ajude nossos animais</div>
+            </div>
+          </div>
+        </div>
+
+<div class="card-section">
+          <div class="section-header">
+            <div class="section-title">Atividade Recente</div>
+            <a href="#" class="link-more">Ver tudo</a>
+          </div>
+          <div class="notif-list">
+            <div class="notif-item">
+              <div class="notif-indicator" style="background:#22c55e"></div>
+              <div>
+                <div class="notif-text">Nova adoção registrada para <strong>Luna</strong></div>
+                <div class="notif-time">Há 2 horas</div>
+              </div>
+            </div>
+            <div class="notif-item">
+              <div class="notif-indicator" style="background:#1a56db"></div>
+              <div>
+                <div class="notif-text"><strong>Rex</strong> cadastrado no sistema</div>
+                <div class="notif-time">Há 5 horas</div>
+              </div>
+            </div>
+            <div class="notif-item">
+              <div class="notif-indicator" style="background:#f5a623"></div>
+              <div>
+                <div class="notif-text">Vacinação agendada para <strong>Bella</strong></div>
+                <div class="notif-time">Ontem</div>
+              </div>
+            </div>
+            <div class="notif-item">
+              <div class="notif-indicator" style="background:#ef4444"></div>
+              <div>
+                <div class="notif-text">Resgate solicitado — Bairro Laranjeiras</div>
+                <div class="notif-time">Ontem</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+<footer>
+    <div class="footer-left">
+      <div class="footer-badge">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="M9 12h6"/><path d="M12 9v6"/></svg>
+      </div>
+      <div class="footer-info">
+        <strong>Prefeitura Municipal da Serra</strong><br>
+        Projeto ARCA — Acolhimento e Resgate de Companheiros Animais
+      </div>
+    </div>
+    <div class="footer-copy">© 2026 Projeto ARCA · Todos os direitos reservados</div>
+  </footer>
+
+</div>
+
+<script>
+  function toggleSidebar() {
+    document.querySelector('.sidebar').classList.toggle('open');
+    document.getElementById('overlay').classList.toggle('show');
+  }
+</script>
+</body>
+</html>

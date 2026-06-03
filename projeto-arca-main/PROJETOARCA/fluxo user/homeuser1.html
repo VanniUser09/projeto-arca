@@ -1,0 +1,537 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projeto ARCA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Poppins', sans-serif; background: #fff; color: #1a2b4a; }
+
+.navbar {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 9px 32px;
+      background: #fff;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+      margin-right: 8px;
+      text-decoration: none;
+    }
+    .logo-img { height: 42px; width: auto; object-fit: contain; }
+    .logo-brand { font-size: 16px; font-weight: 700; color: #1a2b4a; white-space: nowrap; }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 0;
+      flex: 1;
+      justify-content: center;
+    }
+    .nav-links li a {
+      display: block;
+      text-decoration: none;
+      color: #374151;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 6px 11px;
+      border-radius: 6px;
+      white-space: nowrap;
+      transition: background 0.18s, color 0.18s;
+    }
+    .nav-links li a:hover { background: #eff4ff; color: #1a56db; }
+    .nav-links li a.active { color: #1a56db; font-weight: 600; }
+
+    .nav-search {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #f3f4f6;
+      border: 1px solid #e5e7eb;
+      border-radius: 22px;
+      padding: 7px 14px;
+      flex-shrink: 0;
+    }
+    .nav-search input {
+      border: none;
+      background: transparent;
+      font-family: 'Poppins', sans-serif;
+      font-size: 13px;
+      color: #6b7280;
+      outline: none;
+      width: 130px;
+    }
+    .nav-search svg { width: 16px; height: 16px; color: #9ca3af; flex-shrink: 0; }
+
+.nav-user {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    .user-chip {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 14px 5px 5px;
+      background: #f5f7fa;
+      border: 1px solid #e9eef5;
+      border-radius: 24px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .user-chip:hover { background: #eff4ff; }
+    .user-avatar {
+      width: 30px; height: 30px;
+      background: #1a56db;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .user-chip-name { font-size: 13px; font-weight: 500; color: #1a2b4a; }
+    .btn-sair {
+      font-size: 13px;
+      font-weight: 500;
+      color: #9ca3af;
+      text-decoration: none;
+      padding: 6px 10px;
+      border-radius: 6px;
+      transition: color 0.2s, background 0.2s;
+    }
+    .btn-sair:hover { color: #ef4444; background: #fef2f2; }
+
+.hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 6px;
+      margin-left: auto;
+    }
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: #1a2b4a;
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+
+    .nav-drawer {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 200;
+    }
+    .nav-drawer.open { display: block; }
+    .nav-drawer-panel {
+      position: absolute;
+      top: 0; right: 0;
+      width: 260px;
+      height: 100%;
+      background: #fff;
+      padding: 20px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      box-shadow: -4px 0 24px rgba(0,0,0,0.12);
+    }
+    .nav-drawer-close {
+      align-self: flex-end;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 22px;
+      color: #374151;
+      margin-bottom: 12px;
+      line-height: 1;
+    }
+    .nav-drawer-panel a {
+      display: block;
+      text-decoration: none;
+      color: #374151;
+      font-size: 15px;
+      font-weight: 500;
+      padding: 11px 12px;
+      border-radius: 8px;
+      transition: background 0.15s;
+    }
+    .nav-drawer-panel a:hover { background: #eff4ff; color: #1a56db; }
+    .drawer-divider { border: none; border-top: 1px solid #f0f0f0; margin: 8px 0; }
+
+.hero {
+      position: relative;
+      min-height: 208px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: right center;
+      z-index: 0;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 36px 80px 36px 56px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      max-width: 52%;
+    }
+    .hero h1 { font-size: 31px; font-weight: 800; line-height: 1.18; color: #1a2b4a; }
+    .hero h1 .orange { color: #f5a623; }
+    .hero-sub { font-size: 13px; color: #5a6a84; line-height: 1.6; max-width: 340px; }
+    .btn-hero {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #1a56db;
+      color: #fff;
+      border: none;
+      padding: 10px 22px;
+      border-radius: 8px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      width: fit-content;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .btn-hero:hover { background: #1444c0; }
+
+    .carousel-dots { display: flex; gap: 8px; align-items: center; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(26,86,219,0.28); cursor: pointer; transition: background 0.2s; }
+    .dot.active { background: #1a56db; }
+
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 3;
+      background: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 38px; height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.16);
+      transition: background 0.18s, box-shadow 0.18s;
+    }
+    .carousel-btn:hover { background: #eff4ff; box-shadow: 0 4px 14px rgba(0,0,0,0.2); }
+    .carousel-btn svg { width: 20px; height: 20px; color: #1a56db; }
+    .carousel-btn.prev { left: 14px; }
+    .carousel-btn.next { right: 14px; }
+
+.sobre { padding: 52px 72px; background: #fff; }
+    .sobre-titulo { text-align: center; font-size: 21px; font-weight: 700; color: #1a2b4a; margin-bottom: 42px; }
+    .sobre-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; max-width: 880px; margin: 0 auto; }
+    .sobre-col h3 { font-size: 15px; font-weight: 700; color: #1a56db; margin-bottom: 16px; }
+    .missao-texto { font-size: 13px; color: #555; line-height: 1.78; }
+
+    .impacto-cards { display: flex; flex-direction: column; gap: 12px; }
+    .impacto-card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 18px;
+      border-radius: 10px;
+      font-size: 13.5px;
+      font-weight: 500;
+    }
+    .impacto-card svg { width: 22px; height: 22px; flex-shrink: 0; }
+    .impacto-card.blue   { background: #dbeafe; color: #1d4ed8; }
+    .impacto-card.blue   svg { color: #1d4ed8; }
+    .impacto-card.orange { background: #fef3c7; color: #92400e; }
+    .impacto-card.orange svg { color: #b45309; }
+    .impacto-card.green  { background: #d1fae5; color: #065f46; }
+    .impacto-card.green  svg { color: #059669; }
+
+.passos {
+      background: #f8f9fb;
+      padding: 52px 72px;
+      display: flex;
+      justify-content: center;
+      gap: 90px;
+    }
+    .passo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 14px;
+      max-width: 200px;
+      text-decoration: none;
+      color: inherit;
+    }
+    .passo-circulo {
+      width: 54px; height: 54px;
+      border-radius: 50%;
+      background: #1a56db;
+      color: #fff;
+      font-size: 22px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 14px rgba(26,86,219,0.3);
+    }
+    .passo.concluido .passo-circulo { background: #22c55e; box-shadow: 0 4px 14px rgba(34,197,94,0.3); }
+    .passo h4 { font-size: 15px; font-weight: 700; color: #1a2b4a; }
+    .passo p  { font-size: 13px; color: #9ca3af; line-height: 1.55; }
+    .passo-check { font-size: 11px; color: #22c55e; font-weight: 600; margin-top: -6px; }
+
+footer {
+      background: #fff;
+      border-top: 1px solid #f0f0f0;
+      padding: 14px 40px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .footer-logo { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
+    .footer-arca-logo { height: 36px; width: auto; object-fit: contain; }
+    .pref-badge {
+      width: 50px; height: 50px;
+      background: #1a2b4a;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .pref-badge img { width: 36px; height: 36px; object-fit: contain; }
+    .pref-nome { display: flex; flex-direction: column; line-height: 1.3; }
+    .pref-nome strong { font-size: 13px; font-weight: 700; color: #1a2b4a; }
+    .pref-nome span   { font-size: 11px; color: #6b7280; letter-spacing: 0.5px; }
+    .footer-copy { font-size: 12px; color: #9ca3af; text-align: center; flex: 1; }
+
+@media (max-width: 900px) {
+      .nav-links li a { font-size: 12px; padding: 6px 7px; }
+      .nav-search input { width: 90px; }
+      .sobre { padding: 40px 40px; }
+      .passos { gap: 50px; padding: 40px 40px; }
+    }
+
+    @media (max-width: 768px) {
+      .navbar { padding: 10px 16px; }
+      .nav-links, .nav-search, .nav-user { display: none; }
+      .hamburger { display: flex; }
+
+      .hero { min-height: 220px; }
+      .hero-content { max-width: 100%; padding: 28px 20px; }
+      .hero h1 { font-size: 22px; }
+      .hero-sub { font-size: 12px; max-width: 100%; }
+      .carousel-btn { display: none; }
+
+      .sobre { padding: 32px 20px; }
+      .sobre-titulo { font-size: 18px; margin-bottom: 28px; }
+      .sobre-grid { grid-template-columns: 1fr; gap: 28px; }
+
+      .passos { flex-direction: column; gap: 24px; padding: 32px 20px; align-items: center; }
+      .passo { max-width: 280px; }
+
+      footer { flex-direction: column; text-align: center; padding: 20px 16px; gap: 10px; }
+      .footer-logo { justify-content: center; }
+    }
+
+    @media (max-width: 480px) {
+      .hero h1 { font-size: 20px; }
+      .hero-content { padding: 24px 16px; }
+      .sobre { padding: 28px 16px; }
+      .passos { padding: 28px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+
+  <a href="index.html" class="logo-wrap">
+    <img src="PROJETOARCA/login%20completo/img/logo_projeto_arca.png" alt="Projeto ARCA" class="logo-img">
+    <span class="logo-brand">Projeto Arca</span>
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="index.html" class="active">Início</a></li>
+    <li><a href="PROJETOARCA/fluxo%20ong/animais.html">Pets para Adoção</a></li>
+    <li><a href="#">ONGs</a></li>
+    <li><a href="#">Denunciar</a></li>
+    <li><a href="PROJETOARCA/fluxo%20ong/animais.html">Minha Adoção</a></li>
+  </ul>
+
+  <div class="nav-search">
+    <input type="text" placeholder="pesquisa...">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="11" cy="11" r="8"/>
+      <path d="m21 21-4.3-4.3"/>
+    </svg>
+  </div>
+
+<div class="nav-user">
+    <a href="#" class="user-chip">
+      <div class="user-avatar">JS</div>
+      <span class="user-chip-name">João Silva</span>
+    </a>
+    <a href="PROJETOARCA/login%20completo/login.html" class="btn-sair">Sair</a>
+  </div>
+
+  <button class="hamburger" onclick="document.getElementById('navDrawer').classList.add('open')" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+
+</nav>
+
+<div class="nav-drawer" id="navDrawer">
+  <div class="nav-drawer-panel">
+    <button class="nav-drawer-close" onclick="document.getElementById('navDrawer').classList.remove('open')">✕</button>
+    <a href="#" style="font-weight:600; color:#1a56db; font-size:13px; padding: 8px 12px;">João Silva</a>
+    <hr class="drawer-divider">
+    <a href="index.html">Início</a>
+    <a href="PROJETOARCA/fluxo%20ong/animais.html">Pets para Adoção</a>
+    <a href="#">ONGs</a>
+    <a href="#">Denunciar</a>
+    <a href="PROJETOARCA/fluxo%20ong/animais.html">Minha Adoção</a>
+    <hr class="drawer-divider">
+    <a href="PROJETOARCA/login%20completo/login.html" style="color:#ef4444;">Sair</a>
+  </div>
+</div>
+
+<section class="hero">
+  <img class="hero-bg" src="PROJETOARCA/elementos UIUX/banner.png" alt="Banner Projeto ARCA">
+
+  <div class="hero-content">
+    <h1>Um novo lar<br>transforma <span class="orange">vidas.</span></h1>
+    <p class="hero-sub">Adote, registre e ajude animais a encontrarem um novo começo</p>
+    <a href="PROJETOARCA/fluxo%20ong/animais.html" class="btn-hero">Quero adotar →</a>
+    <div class="carousel-dots">
+      <span class="dot active"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+    </div>
+  </div>
+
+  <button class="carousel-btn prev" aria-label="Anterior">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m15 18-6-6 6-6"/>
+    </svg>
+  </button>
+  <button class="carousel-btn next" aria-label="Próximo">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m9 18 6-6-6-6"/>
+    </svg>
+  </button>
+</section>
+
+<section class="sobre">
+  <h2 class="sobre-titulo">Sobre o Projeto ARCA</h2>
+  <div class="sobre-grid">
+
+    <div class="sobre-col">
+      <h3>Nossa Missão</h3>
+      <p class="missao-texto">
+        O Projeto ARCA está comprometido em criar um mundo onde todo animal tenha
+        um lar amoroso. Nós nos esforçamos para conectar indivíduos compassivos com
+        animais necessitados, apoiar o trabalho vital de organizações de bem-estar
+        animal e aumentar a conscientização sobre a posse responsável de animais de
+        estimação.
+      </p>
+    </div>
+
+    <div class="sobre-col">
+      <h3>Nosso Impacto</h3>
+      <div class="impacto-cards">
+        <div class="impacto-card blue">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="4" r="2"/><circle cx="18" cy="8" r="2"/><circle cx="20" cy="16" r="2"/>
+            <path d="M9 10a5 5 0 0 1 5 5v3.5a3.5 3.5 0 0 1-6.84 1.045Q6.52 17.48 4.46 16.84A3.5 3.5 0 0 1 5.5 10Z"/>
+          </svg>
+          <span>Mais de 500 Animais Resgatados</span>
+        </div>
+        <div class="impacto-card orange">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/>
+            <path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+          </svg>
+          <span>Mais de 300 Adoções Bem-sucedidas</span>
+        </div>
+        <div class="impacto-card green">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>
+          </svg>
+          <span>Mais de 50 ONGs Parceiras</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="passos">
+
+  <div class="passo concluido">
+    <div class="passo-circulo">✓</div>
+    <h4>Cadastre-se</h4>
+    <p class="passo-check">Conta criada!</p>
+  </div>
+
+  <a href="PROJETOARCA/fluxo%20ong/animais.html" class="passo" style="text-decoration: none; color: inherit;">
+    <div class="passo-circulo">2</div>
+    <h4>Escolha</h4>
+    <p>Navegue por pets, ONGs ou serviços</p>
+  </a>
+
+  <a href="PROJETOARCA/fluxo%20ong/animais.html" class="passo" style="text-decoration: none; color: inherit;">
+    <div class="passo-circulo">3</div>
+    <h4>Adote</h4>
+    <p>Complete o processo de adoção</p>
+  </a>
+
+</section>
+
+<footer>
+  <div class="footer-logo">
+    <img src="PROJETOARCA/login%20completo/img/logo_projeto_arca.png" alt="Projeto ARCA" class="footer-arca-logo">
+    <div class="pref-badge">
+      <img src="PROJETOARCA/login%20completo/img/logo_prefeitura_serra.png" alt="Prefeitura da Serra">
+    </div>
+    <div class="pref-nome">
+      <strong>Prefeitura</strong>
+      <span>DA SERRA</span>
+    </div>
+  </div>
+  <p class="footer-copy">
+    © 2026 Projeto ARCA · Prefeitura Municipal da Serra · Contato: (27) 6000-0000 | contato@arca.com
+  </p>
+</footer>
+
+</body>
+</html>
